@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "501281927832",
+    "firebase_url": "https://bbdd-c57aa.firebaseio.com",
+    "project_id": "bbdd-c57aa",
+    "storage_bucket": "bbdd-c57aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501281927832:android:a29c971dfc44c526",
+        "android_client_info": {
+          "package_name": "com.mygdx.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501281927832-vm04katds9e5s5na2g4q16c9vra43cg9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mygdx.game",
+            "certificate_hash": "10abb06cdaba4dffa028315172ab0108a02e3f33"
+          }
+        },
+        {
+          "client_id": "501281927832-eokjl00d1eq6sfjlm7qpq2bvqb86i76g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_TL4FbtU2KvwGTU_dM83EIwf_pKpiEo0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501281927832-eokjl00d1eq6sfjlm7qpq2bvqb86i76g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
