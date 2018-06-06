@@ -37,13 +37,12 @@ public class BatallaCopia  implements  Screen {
     private BitmapFont bit;
     private Heroes myActor;
     private int num_escuadron;
-   // private Enemigos myEnemi;
+    // private Enemigos myEnemi;
     private Enemigos myEnemi;
-   // private ArrayList<Enemigo> enemigos;
+    // private ArrayList<Enemigo> enemigos;
     private Datos datos;
 
-    private ArrayList<ProgressBar>barraEnemigo;
-    private ArrayList<Label>nombreEnemigo;
+    private ProgressBar barraHero;
     private Music music;
     private String mapa;
 
@@ -57,16 +56,18 @@ public class BatallaCopia  implements  Screen {
         bacth = new SpriteBatch();
         bit = new BitmapFont();
 
-        barraEnemigo=new ArrayList<ProgressBar>();
-        nombreEnemigo=new ArrayList<Label>();
+
 
         this.datos=datos;
         myActor=datos.getHeroe();
+
         myEnemi=new Enemigos(datos.getEscruadrones().get(num).getEnemigos());
         num_escuadron=num;
         Texture texture = new Texture(Gdx.files.internal("fruina.png"));
         mySkin= new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-
+        barraHero=new ProgressBar(0, myActor.getVida(), 1, false, mySkin);
+        barraHero.setValue(myActor.getVida());
+        barraHero.setPosition(myActor.getX(),myActor.getY());
         Image im = new Image(texture);
 
         im.scaleBy(Gdx.graphics.getHeight() / im.getHeight(), Gdx.graphics.getWidth() / im.getWidth());
@@ -123,7 +124,7 @@ public class BatallaCopia  implements  Screen {
         stage.addActor(button3);
 
 
-        Button button4 = new TextButton("Volver", mySkin, "default");
+       /* Button button4 = new TextButton("Volver", mySkin, "default");
         button4.setSize(col_width, row_height);
         button4.setPosition(0, col_width / 2);
         button4.addListener(new InputListener(){
@@ -138,9 +139,10 @@ public class BatallaCopia  implements  Screen {
             }
         });
 
-        stage.addActor(button4);
-        stage.addActor(myActor);
+        stage.addActor(button4);*/
 
+        stage.addActor(myActor);
+        stage.addActor(barraHero);
         for (int i=0;i<myEnemi.size();i++){
             stage.addActor(myEnemi);
 
@@ -171,7 +173,7 @@ public class BatallaCopia  implements  Screen {
         if(myEnemi.getEnemigo(valorDado).estavivo()){
 
             myActor.recibirDaño(myEnemi.getEnemigo(valorDado).getAtaque());
-
+            barraHero.setValue(myActor.getVida());
         }else{
 
             myEnemi.redimensionarVector(valorDado);
@@ -183,6 +185,7 @@ public class BatallaCopia  implements  Screen {
     private void sistemaBatallaConDefensa(){
         for(int i=0;i<myEnemi.size();i++){
             myActor.reducirDaño(myEnemi.getEnemigo(i).getAtaque());
+            barraHero.setValue(myActor.getVida());
             System.out.println("Vida del hero: "+myActor.getVida());
         }
     }

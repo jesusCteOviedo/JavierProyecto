@@ -55,7 +55,8 @@ public class Heroes extends Actor implements AccionesBatalla {
     public void reducirDaño(int ataque) {
         int def=this.defensa*2;
         def=def-ataque;
-        vida-=def ;
+        ataque=ataque-def/10;
+        vida=vida-ataque ;
 
     }
 
