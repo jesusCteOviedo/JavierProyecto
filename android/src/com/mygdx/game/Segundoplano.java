@@ -27,6 +27,7 @@ import java.util.Map;
 
 import BasesDeDatos.EscuadronBBDD;
 import BasesDeDatos.HeroBBDD;
+import bbdd.ComprobarPartdida;
 
 import static com.firebase.ui.auth.ui.phone.SubmitConfirmationCodeFragment.TAG;
 
@@ -46,6 +47,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
     private Map<String, Object> mapa;
     private ArrayList<EscuadronBBDD> escuadron;
     private ArrayList<Enemigo> enemigo_juego;
+    private ComprobarPartdida c;
 
     private String idPartida,idEnemigo,IdEscuadron,IdHero;
     private int idMapa;
@@ -65,7 +67,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 db=FirebaseFirestore.getInstance();
                 da=FirebaseFirestore.getInstance();
                 timestamp = new Timestamp(System.currentTimeMillis());
-
+                c=new ComprobarPartdida();
 
                 ServerSocket direccion=new ServerSocket(2500);
                 Socket socket=direccion.accept();
@@ -99,16 +101,22 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                 if (task.isSuccessful()) {
                                     //si el cursor no devulve nada es que no tiene nada guardado
                                     if(task.getResult().isEmpty()){
-                                        guardarPartida_Actual();
+                                        c.setTienePartida(false);
+                                        // guardarPartida_Actual();
                                         /*Escuadron_Mapa();
                                         Escuadron_Enemigo();*/
                                     }
                                 }else{
+                                    c.setTienePartida(true);
                                     Actualizar_Partida_Mapa();
                                 }
                             }
                         });
-
+                if(c.isTienePartida()){
+                    System.out.println("Entro por auqi");
+                }else{
+                    guardarPartida_Actual();
+                }
 
 
               /*  String mensaje = new String(datagrama.getData(), 0, datagrama.getLength());
