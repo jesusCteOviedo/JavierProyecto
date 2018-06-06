@@ -218,6 +218,9 @@ public class BatallaCopia  implements  Screen {
             datos.eliminarEscuadron(this.num_escuadron);
             this.game.setScreen(new Mapa(game,datos,mapa,id));
         }
+        if(myActor.getVida()<0){
+            this.game.setScreen(new GameOver(game));
+        }
 
     }
 
