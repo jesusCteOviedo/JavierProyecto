@@ -37,6 +37,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
 
 
     private FirebaseFirestore db;
+    private FirebaseFirestore da;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private Map<String, Object> partida_usuario;
@@ -62,6 +63,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 mAuth= FirebaseAuth.getInstance();
                 user = mAuth.getCurrentUser();
                 db=FirebaseFirestore.getInstance();
+                da=FirebaseFirestore.getInstance();
                 timestamp = new Timestamp(System.currentTimeMillis());
 
 
@@ -133,12 +135,11 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
     }
 
     public void guardarPartida_Actual(){
-// Get a new write batch
-        WriteBatch batch = db.batch();
+
 
         partida_usuario = new HashMap<>();
 
-        
+
         db.collection("Partida_Actual")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -200,77 +201,77 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                             Log.w(TAG, "Error adding document", e);
                                         }
                                     });
-                            escuadron_enemigo=new HashMap<>();
-                            for(int i = 0; i< escuadron.size(); i++) {
-
-                                escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
-                                escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
-                                escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
-                                escuadron_enemigo.put("ID_MAPA",idMapa);
-
-
-                                db.collection("Escuadron")
-                                        .add(escuadron_enemigo)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @SuppressLint("LongLogTag")
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-
-
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @SuppressLint("LongLogTag")
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG, "Error adding document", e);
-                                            }
-                                        });
-                            }
-
-
-                            enemigo=new HashMap<>();
-                            //String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,int id
-                            for(int i = 0; i< escuadron.size(); i++){
-                                for(int j = 0; j< escuadron.get(i).getEnemigos().size(); j++) {
-                                    enemigo.put("ID_ENEMIGO", escuadron.get(i).getEnemigo(j).getId());
-                                    enemigo.put("Ataque_E", escuadron.get(i).getEnemigo(j).getAtaque());
-                                    enemigo.put("Defensa_E", escuadron.get(i).getEnemigo(j).getDefensa());
-                                    enemigo.put("Path", escuadron.get(i).getEnemigo(j).getPath());
-                                    enemigo.put("Vida_E", escuadron.get(i).getEnemigo(j).getVida());
-                                    enemigo.put("Nombre_E", escuadron.get(i).getEnemigo(j).getNombre());
-                                    enemigo.put("ID_ESCUADRON",escuadron.get(i).getId());
-
-
-                                    db.collection("Enemigos")
-                                            .add(enemigo)
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                @SuppressLint("LongLogTag")
-                                                @Override
-                                                public void onSuccess(DocumentReference documentReference) {
-                                                    Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-
-
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @SuppressLint("LongLogTag")
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.w(TAG, "Error adding document", e);
-                                                }
-                                            });
-                                }
-                            }
-
-
 
                         } else {
                             //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
+        escuadron_enemigo=new HashMap<>();
+        for(int i = 0; i< escuadron.size(); i++) {
+
+            escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
+            escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
+            escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
+            escuadron_enemigo.put("ID_MAPA",idMapa);
+
+
+            db.collection("Escuadron")
+                    .add(escuadron_enemigo)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @SuppressLint("LongLogTag")
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @SuppressLint("LongLogTag")
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+        }
+
+
+        enemigo=new HashMap<>();
+        //String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,int id
+        for(int i = 0; i< escuadron.size(); i++){
+            for(int j = 0; j< escuadron.get(i).getEnemigos().size(); j++) {
+                enemigo.put("ID_ENEMIGO", escuadron.get(i).getEnemigo(j).getId());
+                enemigo.put("Ataque_E", escuadron.get(i).getEnemigo(j).getAtaque());
+                enemigo.put("Defensa_E", escuadron.get(i).getEnemigo(j).getDefensa());
+                enemigo.put("Path", escuadron.get(i).getEnemigo(j).getPath());
+                enemigo.put("Vida_E", escuadron.get(i).getEnemigo(j).getVida());
+                enemigo.put("Nombre_E", escuadron.get(i).getEnemigo(j).getNombre());
+                enemigo.put("ID_ESCUADRON",escuadron.get(i).getId());
+
+
+                db.collection("Enemigos")
+                        .add(enemigo)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @SuppressLint("LongLogTag")
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @SuppressLint("LongLogTag")
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+            }
+        }
+
 
     }
 
