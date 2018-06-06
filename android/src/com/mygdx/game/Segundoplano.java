@@ -45,15 +45,18 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
     private Map<String, Object> mapa;
     private ArrayList<EscuadronBBDD> escuadron;
     private ArrayList<Enemigo> enemigo_juego;
+    private int idPartida;
 
-
-    private String idPartida,idEnemigo,IdEscuadron,IdHero;
+    private String idEnemigo,IdEscuadron,IdHero;
     private int idMapa;
     private int maximo;
     private int numero;
     private Timestamp timestamp;
     private boolean encontrado;
-private HeroBBDD hero;
+    private HeroBBDD hero;
+
+
+
     @Override
     protected Boolean doInBackground(Void... voids) {
 
@@ -87,33 +90,6 @@ private HeroBBDD hero;
                 socket.close();
                 direccion.close();
 
-              /*  db.collection("Partida_Actual")
-                        .whereEqualTo("ID_USUARIO", user.getUid())
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @SuppressLint("LongLogTag")
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                                //si salio bien
-                                if (task.isSuccessful()) {
-                                    //si el cursor no devulve nada es que no tiene nada guardado
-                                    if(task.getResult().isEmpty()){
-                                        System.out.println("ENTRO POR FALSE");
-                                        c.setTienePartida(false);
-                                        // guardarPartida_Actual();
-                                        Escuadron_Mapa();
-                                        Escuadron_Enemigo();
-                                    }
-                                }else{
-                                    System.out.println("ENTRO POR TRUE");
-                                    c.setTienePartida(true);
-                                   // Actualizar_Partida_Mapa();
-                                }
-                            }
-                        });
-
-*/
 
 
 
@@ -138,26 +114,6 @@ private HeroBBDD hero;
                                 }
                             }
                         });
-
-              /*  Escuadron_Mapa();
-                Escuadron_Enemigo();
-*/
-
-
-
-              /*  String mensaje = new String(datagrama.getData(), 0, datagrama.getLength());
-                String[] parts = mensaje.split(",");
-                int seleccion = Integer.parseInt(parts[0]);
-                switch (seleccion) {
-                    case 1:
-                        cargarPartida(parts);
-                        break;
-                    case 2:
-                        guardarPartida(parts);
-                        break;
-                }*/
-
-
             }
 
         } catch (Exception e) {
@@ -217,7 +173,7 @@ private HeroBBDD hero;
 
                             mapa = new HashMap<>();
                             mapa.put("ID_PARTIDA", numero);
-                            mapa.put("ID_MAPA", idMapa);
+                            mapa.put("NIVEL", idMapa);
 
                             db.collection("Mapa")
                                     .add(mapa)
@@ -277,24 +233,10 @@ private HeroBBDD hero;
 
     }
 
+    public void Escuadron_Mapa(){
 
 
-    public void guardar(HeroBBDD hero, ArrayList<EscuadronBBDD> escuadron,int id){
-        mAuth= FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        db=FirebaseFirestore.getInstance();
-        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        timestamp = new Timestamp(System.currentTimeMillis());
-        partida_usuario = new HashMap<>();
-        escuadron_enemigo=new HashMap<>();
-        enemigo=new HashMap<>();
-        mapa=new HashMap<>();
-        this.escuadron=escuadron;
-        enemigo_juego=new ArrayList<>();
-        idMapa=id;
 
-
-        //compruebo si esiste la partida de ese suario
         db.collection("Partida_Actual")
                 .whereEqualTo("ID_USUARIO", user.getUid())
                 .get()
@@ -302,34 +244,102 @@ private HeroBBDD hero;
                     @SuppressLint("LongLogTag")
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        //si salio bien
                         if (task.isSuccessful()) {
-                            //si el cursor no devulve nada es que no tiene nada guardado
-                            if(task.getResult().isEmpty()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
 
 
-                                //si tiene una parida guardada
-                            }else{
+                                db.collection("Escuadron")
+                                        .whereEqualTo("ID_PARTIDA", document.getData().get("ID_PARTIDA"))
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                                        Log.d(TAG, document.getId() + " => " + document.getData());
 
-/*
-                                //recuperamos el ID del documento del usuario
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    idDocumento=document.getId();
-                                    //Log.d(TAG, document.getId() + " => " + document.getData());
-                                }
+                                                        db.collection("Escuadron").document(document.getId())
+                                                                .delete()
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+                                                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                                    }
+                                                                })
+                                                                .addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+                                                                        Log.w(TAG, "Error deleting document", e);
+                                                                    }
+                                                                });
 
-                                // se sobrescribirá con los datos proporcionados
-                                db.collection("Partida_Actual").document(idDocumento)
-                                        .set(partida_usuario);
 
-                                db.collection("Escuadron").document(idDocumento)
-                                        .set(escuadron_enemigo);
 
-                                db.collection("Enemigo").document(idDocumento)
-                                        .set(enemigo);
-*/
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                                }
+                                            }
+                                        });
+
+
+
                             }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+
+
+
+        db.collection("Partida_Actual")
+                .whereEqualTo("ID_USUARIO", user.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                idPartida=Integer.valueOf(document.getData().get("ID_PARTIDA").toString());
+                            }
+
+
+                            escuadron_enemigo=new HashMap<>();
+                            for(int i = 0; i< escuadron.size(); i++) {
+
+                                escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
+                                escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
+                                escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
+                                escuadron_enemigo.put("ID_PARTIDA",idMapa);
+
+
+                                db.collection("Escuadron")
+                                        .add(escuadron_enemigo)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error adding document", e);
+                                            }
+                                        });
+                            }
+
+
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -337,18 +347,16 @@ private HeroBBDD hero;
                     }
                 });
 
-    }
 
 
-
-    public void Escuadron_Mapa(){
+/*
         escuadron_enemigo=new HashMap<>();
         for(int i = 0; i< this.escuadron.size(); i++) {
 
             escuadron_enemigo.put("ID_ESCUADRON", this.escuadron.get(i).getId());
             escuadron_enemigo.put("PosX", this.escuadron.get(i).getPosicionX());
             escuadron_enemigo.put("PosY", this.escuadron.get(i).getPosicionY());
-            escuadron_enemigo.put("ID_MAPA",idMapa);
+            escuadron_enemigo.put("ID_PARTIDA",idMapa);
 
 
             db.collection("Escuadron")
@@ -370,6 +378,7 @@ private HeroBBDD hero;
                         }
                     });
         }
+        */
     }
 
 

@@ -66,6 +66,7 @@ public class BatallaCopia  implements  Screen {
         num_escuadron=num;
         Texture texture = new Texture(Gdx.files.internal("fruina.png"));
         mySkin= new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+
         barraHero=new ProgressBar(0, myActor.getVida(), 1, false, mySkin);
         barraHero.setValue(myActor.getVida());
         barraHero.setBounds((Gdx.graphics.getWidth() / 2 - col_width * 2)+300, col_width / 2*3,250,250);
@@ -143,8 +144,11 @@ public class BatallaCopia  implements  Screen {
 
         stage.addActor(button4);*/
 
+        myActor.setPosition((Gdx.graphics.getWidth() / 2 - col_width * 2)+450, (col_width / 2*4));
         stage.addActor(myActor);
+
         stage.addActor(barraHero);
+
         for (int i=0;i<myEnemi.size();i++){
             stage.addActor(myEnemi);
 
