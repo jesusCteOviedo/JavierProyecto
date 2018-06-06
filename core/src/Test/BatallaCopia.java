@@ -56,7 +56,8 @@ public class BatallaCopia  implements  Screen {
         bacth = new SpriteBatch();
         bit = new BitmapFont();
 
-
+        int row_height = Gdx.graphics.getWidth() / 9;
+        int col_width = Gdx.graphics.getWidth() / 8;
 
         this.datos=datos;
         myActor=datos.getHeroe();
@@ -67,7 +68,9 @@ public class BatallaCopia  implements  Screen {
         mySkin= new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         barraHero=new ProgressBar(0, myActor.getVida(), 1, false, mySkin);
         barraHero.setValue(myActor.getVida());
-        barraHero.setPosition(myActor.getX(),myActor.getY());
+        barraHero.setBounds((Gdx.graphics.getWidth() / 2 - col_width * 2)+300, col_width / 2*3,250,250);
+        //barraHero.setPosition((Gdx.graphics.getWidth() / 2 - col_width * 2)+300, col_width / 2*4);
+
         Image im = new Image(texture);
 
         im.scaleBy(Gdx.graphics.getHeight() / im.getHeight(), Gdx.graphics.getWidth() / im.getWidth());
@@ -76,8 +79,7 @@ public class BatallaCopia  implements  Screen {
 
 
         //el boton esta a escala 1:12 de la pantalla e largo
-        int row_height = Gdx.graphics.getWidth() / 9;
-        int col_width = Gdx.graphics.getWidth() / 8;
+
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
 
