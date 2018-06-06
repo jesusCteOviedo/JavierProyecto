@@ -12,11 +12,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.WriteBatch;
 
 import java.net.*;
 import java.io.*;
@@ -27,7 +25,6 @@ import java.util.Map;
 
 import BasesDeDatos.EscuadronBBDD;
 import BasesDeDatos.HeroBBDD;
-import bbdd.ComprobarPartdida;
 
 import static com.firebase.ui.auth.ui.phone.SubmitConfirmationCodeFragment.TAG;
 
@@ -47,7 +44,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
     private Map<String, Object> mapa;
     private ArrayList<EscuadronBBDD> escuadron;
     private ArrayList<Enemigo> enemigo_juego;
-    private ComprobarPartdida c;
+
 
     private String idPartida,idEnemigo,IdEscuadron,IdHero;
     private int idMapa;
@@ -67,7 +64,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 db=FirebaseFirestore.getInstance();
                 da=FirebaseFirestore.getInstance();
                 timestamp = new Timestamp(System.currentTimeMillis());
-                c=new ComprobarPartdida();
+
 
                 ServerSocket direccion=new ServerSocket(2500);
                 Socket socket=direccion.accept();
@@ -89,6 +86,36 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 socket.close();
                 direccion.close();
 
+              /*  db.collection("Partida_Actual")
+                        .whereEqualTo("ID_USUARIO", user.getUid())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @SuppressLint("LongLogTag")
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                //si salio bien
+                                if (task.isSuccessful()) {
+                                    //si el cursor no devulve nada es que no tiene nada guardado
+                                    if(task.getResult().isEmpty()){
+                                        System.out.println("ENTRO POR FALSE");
+                                        c.setTienePartida(false);
+                                        // guardarPartida_Actual();
+                                        Escuadron_Mapa();
+                                        Escuadron_Enemigo();
+                                    }
+                                }else{
+                                    System.out.println("ENTRO POR TRUE");
+                                    c.setTienePartida(true);
+                                   // Actualizar_Partida_Mapa();
+                                }
+                            }
+                        });
+
+*/
+
+
+
                 db.collection("Partida_Actual")
                         .whereEqualTo("ID_USUARIO", user.getUid())
                         .get()
@@ -101,22 +128,19 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                 if (task.isSuccessful()) {
                                     //si el cursor no devulve nada es que no tiene nada guardado
                                     if(task.getResult().isEmpty()){
-                                        c.setTienePartida(false);
-                                        // guardarPartida_Actual();
-                                        /*Escuadron_Mapa();
-                                        Escuadron_Enemigo();*/
+                                        guardarPartida_Actual();
+
+                                    }else{
+                                        Actualizar_Partida_Mapa();
                                     }
-                                }else{
-                                    c.setTienePartida(true);
-                                    Actualizar_Partida_Mapa();
                                 }
                             }
                         });
-                if(c.isTienePartida()){
-                    System.out.println("Entro por auqi");
-                }else{
-                    guardarPartida_Actual();
-                }
+
+                Escuadron_Mapa();
+                Escuadron_Enemigo();
+
+
 
 
               /*  String mensaje = new String(datagrama.getData(), 0, datagrama.getLength());
@@ -215,7 +239,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                         }
                     }
                 });
-
+/*
         escuadron_enemigo=new HashMap<>();
         for(int i = 0; i< escuadron.size(); i++) {
 
@@ -279,7 +303,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                         });
             }
         }
-
+*/
 
     }
 
