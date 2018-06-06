@@ -16,6 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.net.*;
 import java.io.*;
@@ -97,8 +98,8 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                     //si el cursor no devulve nada es que no tiene nada guardado
                                     if(task.getResult().isEmpty()){
                                         guardarPartida_Actual();
-                                        Escuadron_Mapa();
-                                        Escuadron_Enemigo();
+                                        /*Escuadron_Mapa();
+                                        Escuadron_Enemigo();*/
                                     }
                                 }else{
                                     Actualizar_Partida_Mapa();
@@ -132,10 +133,12 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
     }
 
     public void guardarPartida_Actual(){
+// Get a new write batch
+        WriteBatch batch = db.batch();
 
         partida_usuario = new HashMap<>();
 
-
+        
         db.collection("Partida_Actual")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -197,6 +200,71 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                             Log.w(TAG, "Error adding document", e);
                                         }
                                     });
+                            escuadron_enemigo=new HashMap<>();
+                            for(int i = 0; i< escuadron.size(); i++) {
+
+                                escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
+                                escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
+                                escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
+                                escuadron_enemigo.put("ID_MAPA",idMapa);
+
+
+                                db.collection("Escuadron")
+                                        .add(escuadron_enemigo)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error adding document", e);
+                                            }
+                                        });
+                            }
+
+
+                            enemigo=new HashMap<>();
+                            //String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,int id
+                            for(int i = 0; i< escuadron.size(); i++){
+                                for(int j = 0; j< escuadron.get(i).getEnemigos().size(); j++) {
+                                    enemigo.put("ID_ENEMIGO", escuadron.get(i).getEnemigo(j).getId());
+                                    enemigo.put("Ataque_E", escuadron.get(i).getEnemigo(j).getAtaque());
+                                    enemigo.put("Defensa_E", escuadron.get(i).getEnemigo(j).getDefensa());
+                                    enemigo.put("Path", escuadron.get(i).getEnemigo(j).getPath());
+                                    enemigo.put("Vida_E", escuadron.get(i).getEnemigo(j).getVida());
+                                    enemigo.put("Nombre_E", escuadron.get(i).getEnemigo(j).getNombre());
+                                    enemigo.put("ID_ESCUADRON",escuadron.get(i).getId());
+
+
+                                    db.collection("Enemigos")
+                                            .add(enemigo)
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                @SuppressLint("LongLogTag")
+                                                @Override
+                                                public void onSuccess(DocumentReference documentReference) {
+                                                    Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @SuppressLint("LongLogTag")
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "Error adding document", e);
+                                                }
+                                            });
+                                }
+                            }
+
+
 
                         } else {
                             //Log.d(TAG, "Error getting documents: ", task.getException());

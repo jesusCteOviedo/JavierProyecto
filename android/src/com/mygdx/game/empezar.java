@@ -104,14 +104,14 @@ public class empezar  extends FragmentActivity {
                             db=FirebaseFirestore.getInstance();
                             //FirebaseAuth.getInstance().signOut();
                             comprobarSiEstaRegistrado();
-                            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                           /* Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                                     new ResultCallback<Status>() {
                                         @Override
                                         public void onResult(Status status) {
                                             //updateUI(false);
                                         }
                                     });
-
+*/
                             // startActivity(new Intent(empezar.this,AndroidLauncher.class));
 
                             //updateUI(user);
