@@ -132,15 +132,16 @@ private HeroBBDD hero;
                                         guardarPartida_Actual();
 
                                     }else{
-                                        Actualizar_Partida_Mapa();
+                                        Actualizar_Partida_Mapa_Hero();
+
                                     }
                                 }
                             }
                         });
 
-                Escuadron_Mapa();
+              /*  Escuadron_Mapa();
                 Escuadron_Enemigo();
-
+*/
 
 
 
@@ -166,6 +167,8 @@ private HeroBBDD hero;
 
         return true;
     }
+
+
 
     public void guardarPartida_Actual(){
 
@@ -273,7 +276,6 @@ private HeroBBDD hero;
                 });
 
     }
-
 
 
 
@@ -409,10 +411,10 @@ private HeroBBDD hero;
         }
     }
 
-    public void Actualizar_Partida_Mapa(){
+    public void Actualizar_Partida_Mapa_Hero(){
 
         mapa = new HashMap<>();
-
+        heros=new HashMap<>();
 
 
         db.collection("Partida_Actual")
@@ -438,6 +440,17 @@ private HeroBBDD hero;
                                                         mapa.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
                                                         mapa.put("ID_MAPA", idMapa);
                                                         db.collection("Mapa").document(document.getId()).set(mapa);
+
+                                                        heros.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
+                                                        heros.put("ID_PERSONAJE", 1);
+                                                        heros.put("NOMBRE","Caballero");
+                                                        heros.put("ATAQUE", hero.getAtaque());
+                                                        heros.put("DEFENSA", hero.getDefensa());
+                                                        heros.put("POSICIONY",hero.getPosicionY());
+                                                        heros.put("POSICIONX",hero.getPosiconX());
+                                                        heros.put("VIDA", hero.getVida());
+
+                                                        db.collection("Heroes").document(document.getId()).set(heros);
                                                     }
                                                 } else {
                                                     Log.d(TAG, "Error getting documents: ", task.getException());
