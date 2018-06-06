@@ -38,6 +38,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
     private FirebaseFirestore da;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    private Map<String, Object> heros;
     private Map<String, Object> partida_usuario;
     private Map<String, Object> escuadron_enemigo;
     private Map<String, Object> enemigo;
@@ -52,7 +53,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
     private int numero;
     private Timestamp timestamp;
     private boolean encontrado;
-
+private HeroBBDD hero;
     @Override
     protected Boolean doInBackground(Void... voids) {
 
@@ -71,7 +72,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 InputStream entradaDatos = socket.getInputStream();
                 ObjectInputStream entrada =new ObjectInputStream(entradaDatos);
 
-                HeroBBDD hero=(HeroBBDD)entrada.readObject();
+                hero=(HeroBBDD)entrada.readObject();
                 int longitud=entrada.readInt();
                 ArrayList<EscuadronBBDD>es=new ArrayList<>();
                 while(longitud>0) {
@@ -233,6 +234,37 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                             Log.w(TAG, "Error adding document", e);
                                         }
                                     });
+
+                            heros = new HashMap<>();
+                            heros.put("ID_PARTIDA", numero);
+                            heros.put("ID_PERSONAJE", 1);
+                            heros.put("NOMBRE","Caballero");
+                            heros.put("ATAQUE", hero.getAtaque());
+                            heros.put("DEFENSA", hero.getDefensa());
+                            heros.put("POSICIONY",hero.getPosicionY());
+                            heros.put("POSICIONX",hero.getPosiconX());
+                            heros.put("VIDA", hero.getVida());
+
+
+                            db.collection("Heroes")
+                                    .add(heros)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @SuppressLint("LongLogTag")
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @SuppressLint("LongLogTag")
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error adding document", e);
+                                        }
+                                    });
+
 
                         } else {
                             //Log.d(TAG, "Error getting documents: ", task.getException());
