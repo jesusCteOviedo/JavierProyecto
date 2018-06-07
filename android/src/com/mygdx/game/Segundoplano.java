@@ -489,6 +489,34 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                                         mapa.put("ID_MAPA", idMapa);
                                                         db.collection("Mapa").document(document.getId()).set(mapa);
 
+                                                        /*heros.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
+                                                        heros.put("ID_PERSONAJE", 1);
+                                                        heros.put("NOMBRE","Caballero");
+                                                        heros.put("ATAQUE", hero.getAtaque());
+                                                        heros.put("DEFENSA", hero.getDefensa());
+                                                        heros.put("POSICIONY",hero.getPosicionY());
+                                                        heros.put("POSICIONX",hero.getPosiconX());
+                                                        heros.put("VIDA", hero.getVida());
+
+                                                        db.collection("Heroes").document(document.getId()).set(heros);*/
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                                }
+                                            }
+                                        });
+
+
+                                db.collection("Heroes")
+                                        .whereEqualTo("ID_PARTIDA", document.getData().get("ID_PARTIDA"))
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+
                                                         heros.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
                                                         heros.put("ID_PERSONAJE", 1);
                                                         heros.put("NOMBRE","Caballero");
@@ -505,6 +533,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                                 }
                                             }
                                         });
+
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
