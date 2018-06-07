@@ -40,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static com.firebase.ui.auth.ui.phone.SubmitConfirmationCodeFragment.TAG;
 
 public class empezar  extends FragmentActivity {
@@ -164,10 +165,14 @@ public class empezar  extends FragmentActivity {
                                 registrado=false;
                             }
                             if(registrado){
-                                startActivity(new Intent(empezar.this,AndroidLauncher.class));
+                                Intent intent = new Intent(empezar.this,AndroidLauncher.class);
+                                intent.putExtra(EXTRA_MESSAGE, user.getUid());
+                                startActivity(intent);
                             }else{
                                 registrar();
-                                startActivity(new Intent(empezar.this,AndroidLauncher.class));
+                                Intent intent = new Intent(empezar.this,AndroidLauncher.class);
+                                intent.putExtra(EXTRA_MESSAGE, user.getUid());
+                                startActivity(intent);
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
