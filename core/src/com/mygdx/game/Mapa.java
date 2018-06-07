@@ -57,16 +57,17 @@ public class Mapa  implements InputProcessor,Screen {
     private int level;
 
     private ArrayList<String> path;
+private String idUsuario;
 
-
-    public Mapa(Game agame, Datos d, String id,int level){
+    public Mapa(Game agame, Datos d,int level){
         inicializarPaths();
         this.game=agame;
+       // this.idUsuario=idUsuario;
         this.datos=d;
       //  this.mapa=map;
         this.level=0;
 //        this.maps=new ContenedorMapas();
-        this.idmap=id;
+      //  this.idmap=id;
         inicializar();
       //  maps.rellenar();
         //establecemos el mapa del juego que es secuecial en funcion del nivel
@@ -171,17 +172,17 @@ public class Mapa  implements InputProcessor,Screen {
     private void inicializar(){
         if (datos.esVacio()) {
             ArrayList<Escuadron> escuadrones=new ArrayList<Escuadron>();
-            Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,1);
-            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",8,8,3));
-            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,8,2));
-            e.addEnemigo(new Enemigo("enemigoC", 10, 20, 30, "sprites/characters/Demon01.png",8,9,1));
+            Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,datos.getIdUsuario()+"-"+1,1);
+            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId()+"-"+3));
+            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId()+"-"+2));
+            e.addEnemigo(new Enemigo("enemigoC", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId()+"-"+1));
             escuadrones.add(e);
-            e = new Escuadron(250, 400, "sprites/characters/Demon01.png",8,8,2);
-            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,7));
-            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,8));
+            e = new Escuadron(250, 400, "sprites/characters/Demon01.png",8,8,datos.getIdUsuario()+"-"+2,2);
+            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,e.getId()+"-"+1));
+            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId()+"-"+2));
             escuadrones.add(e);
             Heroes heroe=new Heroes();
-            datos=new Datos(heroe,escuadrones);
+            datos=new Datos(datos.getIdUsuario(),heroe,escuadrones);
         }
     }
 
@@ -207,7 +208,7 @@ public class Mapa  implements InputProcessor,Screen {
         stage.draw();
         colisonar();
         if(comprobarMuertos()){
-            game.setScreen(new Mapa(game,new Datos(),idmap,this.level+1));
+            game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario()),this.level+1));
         }
     }
 

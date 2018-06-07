@@ -8,15 +8,18 @@ public class Datos implements Serializable {
     private boolean vacio;
     private Heroes heroe;
     private ArrayList<Escuadron> escuadrones;
+    private String id_usario;
 
-
-    public Datos(Heroes heroe, ArrayList<Escuadron> escuadrones) {
+    public Datos(String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones) {
+        this.id_usario=id_usario;
         this.heroe = heroe;
         this.escuadrones = escuadrones;
         vacio=false;
     }
 
-    public Datos() {
+    public Datos(String id_usario)
+    {
+        this.id_usario=id_usario;
         vacio=true;
     }
 
@@ -42,5 +45,9 @@ public class Datos implements Serializable {
         if (num_escuadron>=0 && num_escuadron<escuadrones.size()){
             escuadrones.remove(num_escuadron);
         }
+    }
+
+    public String getIdUsuario() {
+        return id_usario;
     }
 }

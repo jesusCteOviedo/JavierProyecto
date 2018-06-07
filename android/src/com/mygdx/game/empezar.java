@@ -54,7 +54,7 @@ public class empezar  extends FragmentActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private boolean registrado=true;
-
+    public static final String EXTRA_MESSAGE = "identificador";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

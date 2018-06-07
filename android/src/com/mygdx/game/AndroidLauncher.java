@@ -21,13 +21,13 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-
+		String message = intent.getStringExtra(empezar.EXTRA_MESSAGE);
 
 		Segundoplano s=new Segundoplano();
 		s.execute();
 
 
-		initialize(new Main(),config);
+		initialize(new Main(message),config);
 
 
 

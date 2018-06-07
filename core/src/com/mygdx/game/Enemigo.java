@@ -29,14 +29,14 @@ public class Enemigo implements AccionesBatalla,Serializable {
 
     transient  String nombre;
     transient String path;
-    transient int vida,ataque,defensa,id,fila,columna;
-
+    transient int vida,ataque,defensa,fila,columna;
+private String id;
     private Texture textura;
 
     private TextureRegion[][] tmp;
     private TextureRegion[] walkFrames;
 
-    public Enemigo(String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,int id){
+    public Enemigo(String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,String id){
         this.nombre=nombre;
         this.path=path;
         this.vida=vida;
@@ -97,7 +97,7 @@ public class Enemigo implements AccionesBatalla,Serializable {
         return vida;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -146,7 +146,7 @@ public class Enemigo implements AccionesBatalla,Serializable {
         ataque=(Integer)stream.readObject();
         fila=(Integer)stream.readObject();
         columna=(Integer)stream.readObject();
-        id=(Integer)stream.readObject();
+        id=(String)stream.readObject();
 
     }
 

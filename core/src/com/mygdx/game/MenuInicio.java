@@ -41,15 +41,15 @@ public class MenuInicio implements Screen {
     private Button salir;
     private Game game;
     private Music music;
-
+    private String id_usuario;
     private ContenedorMapas maps;
 
 
-
-    public MenuInicio(Game agame){
+    public MenuInicio(Game agame,String id){
         this.game=agame;
-        this.maps=new ContenedorMapas();
-        maps.rellenar();
+        this.id_usuario=id;
+      //  this.maps=new ContenedorMapas();
+       // maps.rellenar();
         int row_height = Gdx.graphics.getWidth() / 9;
         int col_width = Gdx.graphics.getWidth() / 4;
 
@@ -70,8 +70,8 @@ public class MenuInicio implements Screen {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 music.stop();
                 //game.setScreen(new Mapa(game,new Datos(),"maps/town.tmx"));
-      //          game.setScreen(new Mapa(game,new Datos,1));
-       //         game.setScreen(new Mapa(game,new Datos(),maps.getPath("maps/level1.tmx"),1));
+                          game.setScreen(new Mapa(game,new Datos(id_usuario),1));
+                //         game.setScreen(new Mapa(game,new Datos(),maps.getPath("maps/level1.tmx"),1));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -98,7 +98,7 @@ public class MenuInicio implements Screen {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //System.out.println("Pressed Text Button ataque");
-              Gdx.app.exit();
+                Gdx.app.exit();
 
                 return true;
             }

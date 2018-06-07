@@ -17,6 +17,7 @@ public class Escuadron extends Actor  {
     private float posicionX,posicionY;
 
     private int fila,columna,id;
+    private String id_escuadron;
 
     private Texture texture;
 
@@ -25,7 +26,7 @@ public class Escuadron extends Actor  {
 
 
 
-    public Escuadron(float posicionX, float posicionY, String rutaTextura, int fila, int columna, int id){
+    public Escuadron(float posicionX, float posicionY, String rutaTextura, int fila, int columna, String id_escuadron,int id){
         enemigos=new ArrayList<Enemigo>();
         this.posicionX=posicionX;
         this.posicionY=posicionY;
@@ -73,6 +74,8 @@ public class Escuadron extends Actor  {
     public int getId() {
         return id;
     }
+
+    public String getId_escuadron(){return this.id_escuadron;}
 
     public float getPosicionX() {
         return posicionX;
