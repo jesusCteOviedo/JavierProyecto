@@ -108,10 +108,11 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                     if(task.getResult().isEmpty()){
                                         guardarPartida_Actual();
                                         Escuadron_Enemigo();
-                                      //  Escuadron_Mapa();
+                                        //  Escuadron_Mapa();
                                     }else{
-                                        Actualizar_Partida_Mapa_Hero();
-                                        EliminarEscuadron();
+                                       // Actualizar_Partida_Mapa_Hero();
+                                       EliminarEscuadron();
+                                        //Escuadron_Mapa();
                                     }
                                 }
                             }
@@ -284,7 +285,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 
-
+                                idPartida=Integer.valueOf(document.getData().get("ID_PARTIDA").toString());
                                 db.collection("Escuadron")
                                         .whereEqualTo("ID_PARTIDA", document.getData().get("ID_PARTIDA"))
                                         .get()
@@ -310,24 +311,48 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                                                     }
                                                                 });
 
-
-
                                                     }
+                                                    escuadron_enemigo=new HashMap<>();
+                                                    for(int i = 0; i< escuadron.size(); i++) {
+
+                                                        escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
+                                                        escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
+                                                        escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
+                                                        escuadron_enemigo.put("ID_PARTIDA",idPartida);
+
+
+                                                        db.collection("Escuadron")
+                                                                .add(escuadron_enemigo)
+                                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                                    @SuppressLint("LongLogTag")
+                                                                    @Override
+                                                                    public void onSuccess(DocumentReference documentReference) {
+                                                                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                                                                    }
+                                                                })
+                                                                .addOnFailureListener(new OnFailureListener() {
+                                                                    @SuppressLint("LongLogTag")
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+                                                                        Log.w(TAG, "Error adding document", e);
+                                                                    }
+                                                                });
+                                                    }
+
+
                                                 } else {
                                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                                 }
                                             }
                                         });
-
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
-
-
     }
 
 
