@@ -43,9 +43,11 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:3.2.2'
     implementation 'com.google.firebase:firebase-database:12.0.1'
     implementation 'com.google.firebase:firebase-firestore:12.0.1'
+    implementation 'com.google.firebase:firebase-core:12.0.1'
     implementation project(':core')
 }
 apply plugin: 'com.google.gms.google-services'
+
 
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders

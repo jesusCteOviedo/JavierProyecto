@@ -59,10 +59,10 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
 
     @Override
     protected Boolean doInBackground(Void... voids) {
-
+        escuadron=new ArrayList<EscuadronBBDD>();
         try {
             while(true) {
-                escuadron=new ArrayList<EscuadronBBDD>();
+
                 mAuth= FirebaseAuth.getInstance();
                 user = mAuth.getCurrentUser();
                 db=FirebaseFirestore.getInstance();
@@ -77,7 +77,8 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
 
                 hero=(HeroBBDD)entrada.readObject();
                 int longitud=entrada.readInt();
-                ArrayList<EscuadronBBDD>es=new ArrayList<>();
+
+                escuadron.clear();
                 while(longitud>0) {
                     // EscuadronBBDD escuadron = (EscuadronBBDD) entrada.readObject();
                     escuadron.add((EscuadronBBDD) entrada.readObject());
@@ -106,14 +107,17 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                     //si el cursor no devulve nada es que no tiene nada guardado
                                     if(task.getResult().isEmpty()){
                                         guardarPartida_Actual();
-
+                                        Escuadron_Enemigo();
+                                      //  Escuadron_Mapa();
                                     }else{
                                         Actualizar_Partida_Mapa_Hero();
-
+                                        EliminarEscuadron();
                                     }
                                 }
                             }
                         });
+
+
             }
 
         } catch (Exception e) {
@@ -123,6 +127,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
 
         return true;
     }
+
 
 
 
@@ -225,18 +230,49 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                     });
 
 
+
+                            escuadron_enemigo=new HashMap<>();
+                            for(int i = 0; i< escuadron.size(); i++) {
+
+                                escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
+                                escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
+                                escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
+                                escuadron_enemigo.put("ID_PARTIDA",numero);
+
+
+                                db.collection("Escuadron")
+                                        .add(escuadron_enemigo)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error adding document", e);
+                                            }
+                                        });
+                            }
+
+
+
                         } else {
                             //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
     }
 
-    public void Escuadron_Mapa(){
 
 
 
+    public void EliminarEscuadron() {
         db.collection("Partida_Actual")
                 .whereEqualTo("ID_USUARIO", user.getUid())
                 .get()
@@ -283,8 +319,6 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                             }
                                         });
 
-
-
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -294,7 +328,10 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
 
 
 
+    }
 
+
+    public void Escuadron_Mapa(){
 
         db.collection("Partida_Actual")
                 .whereEqualTo("ID_USUARIO", user.getUid())
@@ -307,6 +344,8 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 idPartida=Integer.valueOf(document.getData().get("ID_PARTIDA").toString());
+
+
                             }
 
 
@@ -316,7 +355,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                 escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
                                 escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
                                 escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
-                                escuadron_enemigo.put("ID_PARTIDA",idMapa);
+                                escuadron_enemigo.put("ID_PARTIDA",idPartida);
 
 
                                 db.collection("Escuadron")
