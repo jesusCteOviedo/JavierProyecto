@@ -35,7 +35,6 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
 
 
     private FirebaseFirestore db;
-    private FirebaseFirestore da;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private Map<String, Object> heros;
@@ -47,12 +46,11 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
     private ArrayList<Enemigo> enemigo_juego;
     private int idPartida;
 
-    private String idEnemigo,IdEscuadron,IdHero;
+
     private int idMapa;
     private int maximo;
     private int numero;
     private Timestamp timestamp;
-    private boolean encontrado;
     private HeroBBDD hero;
 
 
@@ -66,7 +64,6 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 mAuth= FirebaseAuth.getInstance();
                 user = mAuth.getCurrentUser();
                 db=FirebaseFirestore.getInstance();
-                da=FirebaseFirestore.getInstance();
                 timestamp = new Timestamp(System.currentTimeMillis());
 
 
@@ -108,11 +105,11 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                     if(task.getResult().isEmpty()){
                                         guardarPartida_Actual();
                                         Escuadron_Enemigo();
-                                        //  Escuadron_Mapa();
+
                                     }else{
-                                       // Actualizar_Partida_Mapa_Hero();
-                                       EliminarEscuadron();
-                                        //Escuadron_Mapa();
+                                        Actualizar_Partida_Mapa_Hero();
+                                        EliminarEscuadron();
+
                                     }
                                 }
                             }
@@ -270,9 +267,6 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 });
     }
 
-
-
-
     public void EliminarEscuadron() {
         db.collection("Partida_Actual")
                 .whereEqualTo("ID_USUARIO", user.getUid())
@@ -354,97 +348,6 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                     }
                 });
     }
-
-
-    public void Escuadron_Mapa(){
-
-        db.collection("Partida_Actual")
-                .whereEqualTo("ID_USUARIO", user.getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @SuppressLint("LongLogTag")
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                idPartida=Integer.valueOf(document.getData().get("ID_PARTIDA").toString());
-
-
-                            }
-
-
-                            escuadron_enemigo=new HashMap<>();
-                            for(int i = 0; i< escuadron.size(); i++) {
-
-                                escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
-                                escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
-                                escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
-                                escuadron_enemigo.put("ID_PARTIDA",idPartida);
-
-
-                                db.collection("Escuadron")
-                                        .add(escuadron_enemigo)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @SuppressLint("LongLogTag")
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-
-
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @SuppressLint("LongLogTag")
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG, "Error adding document", e);
-                                            }
-                                        });
-                            }
-
-
-
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-
-
-/*
-        escuadron_enemigo=new HashMap<>();
-        for(int i = 0; i< this.escuadron.size(); i++) {
-
-            escuadron_enemigo.put("ID_ESCUADRON", this.escuadron.get(i).getId());
-            escuadron_enemigo.put("PosX", this.escuadron.get(i).getPosicionX());
-            escuadron_enemigo.put("PosY", this.escuadron.get(i).getPosicionY());
-            escuadron_enemigo.put("ID_PARTIDA",idMapa);
-
-
-            db.collection("Escuadron")
-                    .add(escuadron_enemigo)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @SuppressLint("LongLogTag")
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @SuppressLint("LongLogTag")
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error adding document", e);
-                        }
-                    });
-        }
-        */
-    }
-
 
     public void Escuadron_Enemigo(){
 
@@ -567,7 +470,48 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 });
     }
 
-    public void cargarPartida(String []arg){
+    public void cargarPartida( ){
+
+       /* try {
+            Socket socket = new Socket("localhost", 2500);
+            OutputStream salida = socket.getOutputStream();
+            ObjectOutputStream flujo_salida = new ObjectOutputStream(salida);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+*/
+
+        db.collection("Partida_Actual")
+                .whereEqualTo("ID_USUARIO", user.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                db.collection("Mapa")
+                                        .whereEqualTo("ID_PARTIDA", document.getData().get("ID_PARTIDA"))
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                                        //document.getData().get("ID_MAPA").toString();
+                                                        //enviar atraves del socket
+                                                    }
+
+                                                }
+                                            }
+                                        });
+                            }
+
+                        }
+                    }
+                });
 
     }
 

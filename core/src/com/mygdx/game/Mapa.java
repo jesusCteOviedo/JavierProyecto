@@ -51,21 +51,29 @@ public class Mapa  implements InputProcessor,Screen {
 
     private Music music;
     private String mapa;
-    private int idmap;
+    //identificador mapa para la base de datos
+    private String idmap;
+    //nivle
+    private int level;
 
-    private ContenedorMapas maps;
+    private ArrayList<String> path;
 
 
-    public Mapa(Game agame, Datos d, String map,int id){
+    public Mapa(Game agame, Datos d, String id,int level){
+        inicializarPaths();
         this.game=agame;
         this.datos=d;
-        this.mapa=map;
-        this.maps=new ContenedorMapas();
+      //  this.mapa=map;
+        this.level=0;
+//        this.maps=new ContenedorMapas();
         this.idmap=id;
         inicializar();
-        maps.rellenar();
-        //establecemos el mapa del juego
-        tiledMap = new TmxMapLoader().load(mapa);
+      //  maps.rellenar();
+        //establecemos el mapa del juego que es secuecial en funcion del nivel
+        int aux_mapa=level/path.size();
+
+        //tiledMap = new TmxMapLoader().load(mapa);
+        tiledMap = new TmxMapLoader().load(path.get(aux_mapa));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 640 , 480 );
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -104,8 +112,8 @@ public class Mapa  implements InputProcessor,Screen {
                /* Cliente c=new Cliente();
 
                 HeroBBDD her=new HeroBBDD(datos.getHeroe().getPosiconX(),datos.getHeroe().getPosicionY(),datos.getHeroe().getVida(),datos.getHeroe().getDefensa(),datos.getHeroe().getAtaque());
-                c.guardar(her);*/
-                game.setScreen(new MenuOpciones(game,datos,mapa,idmap));
+                c.guardar(her);*///
+                // game.setScreen(new MenuOpciones(game,datos,mapa,idmap));
 
             }
 
@@ -125,6 +133,13 @@ public class Mapa  implements InputProcessor,Screen {
 
     }
 
+    private void inicializarPaths() {
+        path=new ArrayList<String>();
+        path.add("maps/level1.tmx");
+        path.add("maps/level2.tmx");
+        path.add("maps/level3.tmx");
+        path.add("maps/level4.tmx");
+    }
 
 
     //mejora!!!!!
@@ -147,7 +162,8 @@ public class Mapa  implements InputProcessor,Screen {
             if (rec.overlaps(ene)) {
                 music.stop();
                 datos.getHeroe().getActions().clear();
-                game.setScreen(new BatallaCopia(game,datos,i,mapa,idmap));
+                //pasar batalla
+               // game.setScreen(new BatallaCopia(game,datos,i,mapa,idmap));
             }
         }
     }
@@ -191,7 +207,7 @@ public class Mapa  implements InputProcessor,Screen {
         stage.draw();
         colisonar();
         if(comprobarMuertos()){
-            game.setScreen(new Mapa(game,new Datos(),maps.levelUp(mapa),++idmap));
+            game.setScreen(new Mapa(game,new Datos(),idmap,this.level+1));
         }
     }
 

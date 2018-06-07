@@ -22,17 +22,6 @@ public class Cliente implements AsyncTask {
 
     public void guardar(HeroBBDD hero, ArrayList<Escuadron> escuadron,int id){
         try {
-            /*InetAddress hostReceptor = InetAddress.getByName("127.0.0.1");
-            DatagramSocket socket = new DatagramSocket();
-            ByteArrayOutputStream bs= new ByteArrayOutputStream();
-            ObjectOutputStream os = new ObjectOutputStream (bs);
-            os.writeObject(datos);  // this es de tipo DatoUdp
-            os.close();
-            byte[] bytes =  bs.toByteArray(); // devuelve byte[]
-
-            DatagramPacket paquete = new DatagramPacket(bytes, bytes.length, hostReceptor,6789);
-            socket.send(paquete);
-*/
 
             Socket socket=new Socket("localhost",2500);
             OutputStream salida=socket.getOutputStream();
@@ -43,9 +32,33 @@ public class Cliente implements AsyncTask {
                 flujo_salida.writeObject(new EscuadronBBDD(escuadron.get(i)));
             }
             flujo_salida.writeInt(id);
-            //flujo_salida.writeObject(escuadron);
             flujo_salida.flush();
             flujo_salida.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void cargar(){
+        try {
+
+            Socket socket=new Socket("localhost",2500);
+            OutputStream salida=socket.getOutputStream();
+            ObjectOutputStream flujo_salida = new ObjectOutputStream( salida);
+            flujo_salida.writeInt(2);
+            flujo_salida.flush();
+            flujo_salida.close();
+
+
+
+            ServerSocket direccion=new ServerSocket(2500);
+            Socket socket2=direccion.accept();
+            InputStream entradaDatos = socket2.getInputStream();
+            ObjectInputStream entrada =new ObjectInputStream(entradaDatos);
+
+
 
         }catch (Exception e){
             e.printStackTrace();

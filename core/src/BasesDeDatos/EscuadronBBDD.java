@@ -2,6 +2,7 @@ package BasesDeDatos;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Enemigo;
+import com.mygdx.game.Enemigos;
 import com.mygdx.game.Escuadron;
 
 import java.io.Serializable;
@@ -28,6 +29,18 @@ public class EscuadronBBDD implements Serializable {
         this.id=escuadron.getId();
 
     }
+
+
+    public EscuadronBBDD(Escuadron escuadron,ArrayList<Enemigo>enemigo){
+        enemigos=enemigo;
+        this.posicionX=escuadron.getPosicionX();
+        this.posicionY=escuadron.getPosicionY();
+        this.fila=escuadron.getFila();
+        this.columna=escuadron.getColumna();
+        this.id=escuadron.getId();
+
+    }
+
 
 
     public float getPosicionX() {

@@ -38,6 +38,11 @@ public class ContenedorMapas {
         return path.get(identificador);
     }
 
+    public String getPath(int id){
+        int identificador=id-1;
+        return path.get(identificador);
+    }
+
     public String levelUp(String ruta){
         int identificador=path.indexOf(ruta);
         if(identificador==path.size()-1){
