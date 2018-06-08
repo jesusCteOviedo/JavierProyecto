@@ -327,7 +327,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 
-                                db.collection("Enemigos")
+                                /*db.collection("Enemigos")
                                         .whereEqualTo("ID_ESCUADRON", document.getData().get("ID_ESCUADRON"))
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -355,7 +355,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                                 }
                                             }
-                                        });
+                                        });*/
 
                                 db.collection("Escuadron").document(document.getId())
                                         .delete()
@@ -407,43 +407,6 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
 
 
 
-                            enemigo=new HashMap<>();
-
-                            for(int i = 0; i< escuadron.size(); i++){
-                                for(int j = 0; j< escuadron.get(i).getEnemigos().size(); j++) {
-                                    enemigo.put("ID_ENEMIGO", escuadron.get(i).getEnemigo(j).getId());
-                                    enemigo.put("Ataque_E",escuadron.get(i).getEnemigo(j).getAtaque());
-                                    enemigo.put("Defensa_E", escuadron.get(i).getEnemigo(j).getDefensa());
-                                    enemigo.put("Path", escuadron.get(i).getEnemigo(j).getPath());
-                                    enemigo.put("Vida_E", escuadron.get(i).getEnemigo(j).getVida());
-                                    enemigo.put("Nombre_E", escuadron.get(i).getEnemigo(j).getNombre());
-                                    enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
-
-
-                                    db.collection("Enemigos")
-                                            .add(enemigo)
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                @SuppressLint("LongLogTag")
-                                                @Override
-                                                public void onSuccess(DocumentReference documentReference) {
-                                                    Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-
-
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @SuppressLint("LongLogTag")
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.w(TAG, "Error adding document", e);
-                                                }
-                                            });
-                                }
-                            }
-
-
-
-
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -451,37 +414,52 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                 });
 
 
-/*
-        escuadron_enemigo = new HashMap<>();
-        for (int i = 0; i < escuadron.size(); i++) {
-
-            escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
-            escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
-            escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
-            escuadron_enemigo.put("ID_PARTIDA", user.getUid());
-
-
-            db.collection("Escuadron")
-                    .add(escuadron_enemigo)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @SuppressLint("LongLogTag")
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-
-
+        /*db.collection("Escuadron")
+                .whereEqualTo("ID_PARTIDA", user.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                db.collection("Enemigos")
+                                        .whereEqualTo("ID_ESCUADRON", document.getData().get("ID_ESCUADRON"))
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @SuppressLint("LongLogTag")
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                                        //Log.d(TAG, document.getId() + " => " + document.getData());
+                                                        db.collection("Enemigos").document(document.getId())
+                                                                .delete()
+                                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                    @Override
+                                                                    public void onSuccess(Void aVoid) {
+                                                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                                    }
+                                                                })
+                                                                .addOnFailureListener(new OnFailureListener() {
+                                                                    @Override
+                                                                    public void onFailure(@NonNull Exception e) {
+                                                                        Log.w(TAG, "Error deleting document", e);
+                                                                    }
+                                                                });
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                                }
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @SuppressLint("LongLogTag")
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error adding document", e);
-                        }
-                    });
-        }
-
-
+                    }
+                });
 
         enemigo=new HashMap<>();
 
@@ -515,8 +493,8 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                             }
                         });
             }
-        }
-*/
+        }*/
+
 
     }
 

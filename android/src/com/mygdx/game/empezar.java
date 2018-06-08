@@ -55,6 +55,8 @@ public class empezar  extends FragmentActivity {
     private FirebaseUser user;
     private boolean registrado=true;
     public static final String EXTRA_MESSAGE = "identificador";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,14 +107,14 @@ public class empezar  extends FragmentActivity {
                             db=FirebaseFirestore.getInstance();
                             //FirebaseAuth.getInstance().signOut();
                             comprobarSiEstaRegistrado();
-                           /* Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                            /*Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                                     new ResultCallback<Status>() {
                                         @Override
                                         public void onResult(Status status) {
                                             //updateUI(false);
                                         }
-                                    });
-*/
+                                    });*/
+
                             // startActivity(new Intent(empezar.this,AndroidLauncher.class));
 
                             //updateUI(user);
@@ -122,6 +124,7 @@ public class empezar  extends FragmentActivity {
                             //Toast.makeText(GoogleSignInActivity.this, "Authentication failed.",
                             //	Toast.LENGTH_SHORT).show();
                             //updateUI(null);
+                            System.exit(0);
                         }
 
                         // ...
@@ -143,6 +146,7 @@ public class empezar  extends FragmentActivity {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
+                System.exit(0);
                 // Google Sign In failed, update UI appropriately
                 // ...
             }
@@ -176,6 +180,7 @@ public class empezar  extends FragmentActivity {
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
+                            System.exit(0);
                         }
                     }
                 });

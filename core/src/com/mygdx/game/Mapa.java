@@ -184,13 +184,13 @@ public class Mapa  implements InputProcessor,Screen {
         if (datos.esVacio()) {
             ArrayList<Escuadron> escuadrones=new ArrayList<Escuadron>();
             Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,datos.getIdUsuario()+"-"+1,1);
-            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId()+"-"+3,3));
-            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId()+"-"+2,2));
-            e.addEnemigo(new Enemigo("enemigoC", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId()+"-"+1,1));
+            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+3,3));
+            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+2,2));
+            e.addEnemigo(new Enemigo("enemigoC", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+1,1));
             escuadrones.add(e);
             e = new Escuadron(250, 400, "sprites/characters/Demon01.png",8,8,datos.getIdUsuario()+"-"+2,2);
-            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,e.getId()+"-"+1,1));
-            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId()+"-"+2,2));
+            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,e.getId_escuadron()+"-"+1,1));
+            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+2,2));
             escuadrones.add(e);
             Heroes heroe=new Heroes();
             datos=new Datos(datos.getIdUsuario(),heroe,escuadrones);

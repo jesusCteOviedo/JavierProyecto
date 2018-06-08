@@ -144,7 +144,6 @@ public class Enemigo implements AccionesBatalla,Serializable {
         stream.writeObject(ataque);
         stream.writeObject(fila);
         stream.writeObject(columna);
-        stream.writeObject(ataque);
         stream.writeObject(id);
     }
 
@@ -159,7 +158,7 @@ public class Enemigo implements AccionesBatalla,Serializable {
         ataque=(Integer)stream.readObject();
         fila=(Integer)stream.readObject();
         columna=(Integer)stream.readObject();
-        id=String.valueOf(stream.readObject());
+        id=(String)stream.readObject();
 
     }
 
