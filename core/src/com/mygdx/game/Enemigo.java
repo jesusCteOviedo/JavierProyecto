@@ -30,13 +30,17 @@ public class Enemigo implements AccionesBatalla,Serializable {
     transient  String nombre;
     transient String path;
     transient int vida,ataque,defensa,fila,columna;
-private String id;
+    private String id;
     private Texture textura;
+
+
+
+    private int idGradico;
 
     private TextureRegion[][] tmp;
     private TextureRegion[] walkFrames;
 
-    public Enemigo(String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,String id){
+    public Enemigo(String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,String id,int idGrafico){
         this.nombre=nombre;
         this.path=path;
         this.vida=vida;
@@ -45,6 +49,7 @@ private String id;
         this.fila=fila;
         this.columna=columna;
         this.id=id;
+        this.idGradico=idGrafico;
 
         textura=new Texture(Gdx.files.internal(path));
 
@@ -119,6 +124,14 @@ private String id;
         vida-=def ;
     }
 
+
+    public int getIdGradico() {
+        return idGradico;
+    }
+
+    public void setIdGradico(int idGradico) {
+        this.idGradico = idGradico;
+    }
 
     private void writeObject(java.io.ObjectOutputStream stream)
             throws IOException

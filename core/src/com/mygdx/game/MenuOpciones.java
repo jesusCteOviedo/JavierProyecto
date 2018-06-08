@@ -32,11 +32,11 @@ public class MenuOpciones implements Screen {
     private int idmap;
 
 
-    public MenuOpciones(Game agame, final Datos datos, String map,int id){
+    public MenuOpciones(Game agame, Datos datos,int level){
         this.game=agame;
-        this.mapa=map;
+       // this.mapa=map;
         this.d=datos;
-        this.idmap=id;
+        this.idmap=level;
         int row_height = Gdx.graphics.getWidth() / 9;
         int col_width = Gdx.graphics.getWidth() / 4;
 
@@ -79,7 +79,7 @@ public class MenuOpciones implements Screen {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //System.out.println("Pressed Text Button ataque");
-                game.setScreen(new Mapa(game, d,mapa,idmap));
+                game.setScreen(new Mapa(game, d,idmap));
                 return true;
             }
         });

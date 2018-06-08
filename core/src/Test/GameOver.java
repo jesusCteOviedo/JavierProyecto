@@ -21,9 +21,11 @@ public class GameOver  implements Screen {
     private Skin skin;
     private Label label;
     private Game game;
+    private String idUsuari;
 
-    public GameOver(Game agame){
+    public GameOver(Game agame, String idUsuario){
         this.game=agame;
+        this.idUsuari=idUsuario;
         stage=new Stage();
         skin=new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
@@ -38,7 +40,7 @@ public class GameOver  implements Screen {
         menuInicio.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new MenuInicio(game));
+                game.setScreen(new MenuInicio(game,idUsuari));
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

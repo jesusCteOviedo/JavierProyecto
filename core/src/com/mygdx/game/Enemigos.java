@@ -45,7 +45,7 @@ public class Enemigos extends Actor implements Serializable  {
             float width = a * Gdx.graphics.getWidth();
             if(enemigos.get(i)!=null) {
              //   batch.draw(enemigos.get(i).textura, width, Gdx.graphics.getWidth() / 2 - 150, 50, 50);
-                batch.draw(enemigos.get(i).getTextura(enemigos.get(i).getId()), width, Gdx.graphics.getWidth() / 2 - 150, 50, 50);
+                batch.draw(enemigos.get(i).getTextura(enemigos.get(i).getIdGradico()), width, Gdx.graphics.getWidth() / 2 - 150, 50, 50);
                 barraEnemigo.add(new ProgressBar(0, enemigos.get(i).getVida(), 1, false, mySkin));
                 barraEnemigo.get(i).setValue(enemigos.get(i).getVida());
                 barraEnemigo.get(i).setPosition( width,Gdx.graphics.getWidth() / 2 - 250);

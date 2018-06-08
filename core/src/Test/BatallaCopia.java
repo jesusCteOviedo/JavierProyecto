@@ -48,7 +48,7 @@ public class BatallaCopia  implements  Screen {
 
     private int id;
 
-    public BatallaCopia(Game agame,Datos datos,int num,String mapa,int idmap) {
+    public BatallaCopia(Game agame,Datos datos,int num,int idmap) {
         this.game = agame;
         this.mapa=mapa;
         this.id=idmap;
@@ -220,10 +220,10 @@ public class BatallaCopia  implements  Screen {
         }else{
             music.stop();
             datos.eliminarEscuadron(this.num_escuadron);
-            this.game.setScreen(new Mapa(game,datos,mapa,id));
+            this.game.setScreen(new Mapa(game,datos,id));
         }
         if(myActor.getVida()<0){
-            this.game.setScreen(new GameOver(game));
+            this.game.setScreen(new GameOver(game,datos.getIdUsuario()));
         }
 
     }
