@@ -70,7 +70,7 @@ public class MenuInicio implements Screen {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 music.stop();
                 //game.setScreen(new Mapa(game,new Datos(),"maps/town.tmx"));
-                          game.setScreen(new Mapa(game,new Datos(id_usuario),1));
+                          game.setScreen(new Mapa(game,new Datos(id_usuario,0),0));
                 //         game.setScreen(new Mapa(game,new Datos(),maps.getPath("maps/level1.tmx"),1));
             }
             @Override

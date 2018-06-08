@@ -60,7 +60,7 @@ public class MenuOpciones implements Screen {
 
                 //EscuadronBBDD es=new EscuadronBBDD(d.getEscruadrones().get(0));
 
-                client.guardar(h,d.getEscruadrones(),idmap);
+                client.guardar(h,d.getBorrar(),idmap,d.getEscruadrones());
                 //client.guardar(h,es);
 
 

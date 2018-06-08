@@ -78,7 +78,7 @@ public class Mapa  implements InputProcessor,Screen {
         //  maps.rellenar();
 
         //establecemos el mapa del juego que es secuecial en funcion del nivel
-        int aux_mapa=level/path.size();
+        int aux_mapa=level%path.size();
 
 
         //tiledMap = new TmxMapLoader().load(mapa);
@@ -183,17 +183,17 @@ public class Mapa  implements InputProcessor,Screen {
     private void inicializar(){
         if (datos.esVacio()) {
             ArrayList<Escuadron> escuadrones=new ArrayList<Escuadron>();
-            Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,datos.getIdUsuario()+"-"+1,1);
+            Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+1,1);
             e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+3,3));
             e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+2,2));
             e.addEnemigo(new Enemigo("enemigoC", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+1,1));
             escuadrones.add(e);
-            e = new Escuadron(250, 400, "sprites/characters/Demon01.png",8,8,datos.getIdUsuario()+"-"+2,2);
+            e = new Escuadron(250, 400, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+2,2);
             e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,e.getId_escuadron()+"-"+1,1));
             e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+2,2));
             escuadrones.add(e);
             Heroes heroe=new Heroes();
-            datos=new Datos(datos.getIdUsuario(),heroe,escuadrones);
+            datos=new Datos(datos.getIdUsuario(),heroe,escuadrones,datos.getId_mapa());
         }
     }
 
@@ -219,7 +219,8 @@ public class Mapa  implements InputProcessor,Screen {
         stage.draw();
         colisonar();
         if(comprobarMuertos()){
-            game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario()),++level));
+            level++;
+            game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level),level));
         }
     }
 

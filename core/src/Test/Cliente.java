@@ -20,7 +20,7 @@ public class Cliente implements AsyncTask {
 
 
 
-    public void guardar(HeroBBDD hero, ArrayList<Escuadron> escuadron,int id){
+    public void guardar(HeroBBDD hero, ArrayList<Escuadron> escuadron,int id,ArrayList<Escuadron> escu){
         try {
 
             Socket socket=new Socket("localhost",2500);
@@ -32,6 +32,10 @@ public class Cliente implements AsyncTask {
                 flujo_salida.writeObject(new EscuadronBBDD(escuadron.get(i)));
             }
             flujo_salida.writeInt(id);
+            flujo_salida.writeInt(escu.size());
+            for (int i=0;i<escu.size();i++) {
+                flujo_salida.writeObject(new EscuadronBBDD(escu.get(i)));
+            }
             flujo_salida.flush();
             flujo_salida.close();
 

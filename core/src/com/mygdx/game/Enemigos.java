@@ -29,6 +29,7 @@ public class Enemigos extends Actor implements Serializable  {
         enemigos=e;
 
         mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+
     }
 
 
@@ -63,6 +64,7 @@ public class Enemigos extends Actor implements Serializable  {
 
     public void redimensionarVector(int numero){
         if (numero>=0 && numero<enemigos.size())
+
             enemigos.remove(numero);
     }
 
