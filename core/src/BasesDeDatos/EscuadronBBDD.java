@@ -16,8 +16,9 @@ public class EscuadronBBDD implements Serializable {
 
     private float posicionX,posicionY;
 
-    private int fila,columna,id;
+    private int fila,columna,idGrafico;
 
+    private String id;
 
 
     public EscuadronBBDD(Escuadron escuadron){
@@ -26,8 +27,8 @@ public class EscuadronBBDD implements Serializable {
         this.posicionY=escuadron.getPosicionY();
         this.fila=escuadron.getFila();
         this.columna=escuadron.getColumna();
-        this.id=escuadron.getId();
-
+        this.idGrafico=escuadron.getId();
+        this.id=escuadron.getId_escuadron();
     }
 
 
@@ -37,7 +38,7 @@ public class EscuadronBBDD implements Serializable {
         this.posicionY=escuadron.getPosicionY();
         this.fila=escuadron.getFila();
         this.columna=escuadron.getColumna();
-        this.id=escuadron.getId();
+        //this.id=escuadron.getId();
 
     }
 
@@ -59,9 +60,18 @@ public class EscuadronBBDD implements Serializable {
         return columna;
     }
 
-    public int getId() {
+    public int getIdGrafico() {
+        return idGrafico;
+    }
+
+    public String getId() {
         return id;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 
     public Enemigo getEnemigo(int valorDado) {
         if (valorDado>=0 && valorDado<enemigos.size())

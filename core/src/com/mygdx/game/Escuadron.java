@@ -17,6 +17,9 @@ public class Escuadron extends Actor  {
     private float posicionX,posicionY;
 
     private int fila,columna,id;
+
+
+
     private String id_escuadron;
 
     private Texture texture;
@@ -33,6 +36,7 @@ public class Escuadron extends Actor  {
         this.id=id;
         this.fila=fila;
         this.columna=columna;
+        this.id_escuadron=id_escuadron;
        // textura=new Texture(Gdx.files.internal(rutaTextura));
         textura=new Texture(Gdx.files.internal(rutaTextura));
 
@@ -76,6 +80,10 @@ public class Escuadron extends Actor  {
     }
 
     public String getId_escuadron(){return this.id_escuadron;}
+
+    public void setId_escuadron(String id_escuadron) {
+        this.id_escuadron = id_escuadron;
+    }
 
     public float getPosicionX() {
         return posicionX;

@@ -107,8 +107,8 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                                         Escuadron_Enemigo();
 
                                     }else{
-                                        Actualizar_Partida_Mapa_Hero();
-                                        EliminarEscuadron();
+                                      /*  Actualizar_Partida_Mapa_Hero();
+                                        EliminarEscuadron();*/
 
                                     }
                                 }
@@ -126,9 +126,157 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
         return true;
     }
 
+    public void guardarPartida_Actual(){
+
+        partida_usuario = new HashMap<>();
+        partida_usuario.put("ID_PARTIDA", user.getUid());
+        partida_usuario.put("FECHA",timestamp.toString());
+        //partida_usuario.put("ID_USUARIO", user.getUid());
+
+
+        //creamos el documento que guarda en la base de datos
+        db.collection("Partida_Actual")
+                .add(partida_usuario)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+        mapa = new HashMap<>();
+        mapa.put("ID_PARTIDA", user.getUid());
+        mapa.put("NIVEL", idMapa);
+
+        db.collection("Mapa")
+                .add(mapa)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+        heros = new HashMap<>();
+        heros.put("ID_PARTIDA", user.getUid());
+        heros.put("ID_PERSONAJE", 1);
+        heros.put("NOMBRE","Caballero");
+        heros.put("ATAQUE", hero.getAtaque());
+        heros.put("DEFENSA", hero.getDefensa());
+        heros.put("POSICIONY",hero.getPosicionY());
+        heros.put("POSICIONX",hero.getPosiconX());
+        heros.put("VIDA", hero.getVida());
+
+
+        db.collection("Heroes")
+                .add(heros)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+        escuadron_enemigo=new HashMap<>();
+        for(int i = 0; i< escuadron.size(); i++) {
+
+            escuadron_enemigo.put("ID_ESCUADRON", escuadron.get(i).getId());
+            escuadron_enemigo.put("PosX", escuadron.get(i).getPosicionX());
+            escuadron_enemigo.put("PosY", escuadron.get(i).getPosicionY());
+            escuadron_enemigo.put("ID_PARTIDA",user.getUid());
+
+
+            db.collection("Escuadron")
+                    .add(escuadron_enemigo)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @SuppressLint("LongLogTag")
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @SuppressLint("LongLogTag")
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+        }
+
+    }
 
 
 
+    public void Escuadron_Enemigo(){
+
+
+        enemigo=new HashMap<>();
+        //String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,int id
+        for(int i = 0; i< this.escuadron.size(); i++){
+            for(int j = 0; j< this.escuadron.get(i).getEnemigos().size(); j++) {
+                enemigo.put("ID_ENEMIGO", this.escuadron.get(i).getEnemigo(j).getId());
+                enemigo.put("Ataque_E", this.escuadron.get(i).getEnemigo(j).getAtaque());
+                enemigo.put("Defensa_E", this.escuadron.get(i).getEnemigo(j).getDefensa());
+                enemigo.put("Path", this.escuadron.get(i).getEnemigo(j).getPath());
+                enemigo.put("Vida_E", this.escuadron.get(i).getEnemigo(j).getVida());
+                enemigo.put("Nombre_E", this.escuadron.get(i).getEnemigo(j).getNombre());
+                enemigo.put("ID_ESCUADRON", this.escuadron.get(i).getId());
+
+
+                db.collection("Enemigos")
+                        .add(enemigo)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @SuppressLint("LongLogTag")
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @SuppressLint("LongLogTag")
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+            }
+        }
+    }
+
+/*
     public void guardarPartida_Actual(){
 
 
@@ -266,7 +414,9 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
                     }
                 });
     }
+*/
 
+/*
     public void EliminarEscuadron() {
         db.collection("Partida_Actual")
                 .whereEqualTo("ID_USUARIO", user.getUid())
@@ -386,90 +536,82 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
             }
         }
     }
+    */
 
-    public void Actualizar_Partida_Mapa_Hero(){
+    /*
+        public void Actualizar_Partida_Mapa_Hero(){
 
-        mapa = new HashMap<>();
-        heros=new HashMap<>();
+            mapa = new HashMap<>();
+            heros=new HashMap<>();
 
 
-        db.collection("Partida_Actual")
-                .whereEqualTo("ID_USUARIO", user.getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @SuppressLint("LongLogTag")
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                db.collection("Mapa")
-                                        .whereEqualTo("ID_PARTIDA", document.getData().get("ID_PARTIDA"))
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @SuppressLint("LongLogTag")
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                                        mapa.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
-                                                        mapa.put("ID_MAPA", idMapa);
-                                                        db.collection("Mapa").document(document.getId()).set(mapa);
+            db.collection("Partida_Actual")
+                    .whereEqualTo("ID_USUARIO", user.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @SuppressLint("LongLogTag")
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    db.collection("Mapa")
+                                            .whereEqualTo("ID_PARTIDA", document.getData().get("ID_PARTIDA"))
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @SuppressLint("LongLogTag")
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                                            Log.d(TAG, document.getId() + " => " + document.getData());
+                                                            mapa.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
+                                                            mapa.put("ID_MAPA", idMapa);
+                                                            db.collection("Mapa").document(document.getId()).set(mapa);
 
-                                                        /*heros.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
-                                                        heros.put("ID_PERSONAJE", 1);
-                                                        heros.put("NOMBRE","Caballero");
-                                                        heros.put("ATAQUE", hero.getAtaque());
-                                                        heros.put("DEFENSA", hero.getDefensa());
-                                                        heros.put("POSICIONY",hero.getPosicionY());
-                                                        heros.put("POSICIONX",hero.getPosiconX());
-                                                        heros.put("VIDA", hero.getVida());
-
-                                                        db.collection("Heroes").document(document.getId()).set(heros);*/
+                                                        }
+                                                    } else {
+                                                        Log.d(TAG, "Error getting documents: ", task.getException());
                                                     }
-                                                } else {
-                                                    Log.d(TAG, "Error getting documents: ", task.getException());
                                                 }
-                                            }
-                                        });
+                                            });
 
 
-                                db.collection("Heroes")
-                                        .whereEqualTo("ID_PARTIDA", document.getData().get("ID_PARTIDA"))
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @SuppressLint("LongLogTag")
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                    db.collection("Heroes")
+                                            .whereEqualTo("ID_PARTIDA", document.getData().get("ID_PARTIDA"))
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @SuppressLint("LongLogTag")
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                                        heros.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
-                                                        heros.put("ID_PERSONAJE", 1);
-                                                        heros.put("NOMBRE","Caballero");
-                                                        heros.put("ATAQUE", hero.getAtaque());
-                                                        heros.put("DEFENSA", hero.getDefensa());
-                                                        heros.put("POSICIONY",hero.getPosicionY());
-                                                        heros.put("POSICIONX",hero.getPosiconX());
-                                                        heros.put("VIDA", hero.getVida());
+                                                            heros.put("ID_PARTIDA", document.getData().get("ID_PARTIDA"));
+                                                            heros.put("ID_PERSONAJE", 1);
+                                                            heros.put("NOMBRE","Caballero");
+                                                            heros.put("ATAQUE", hero.getAtaque());
+                                                            heros.put("DEFENSA", hero.getDefensa());
+                                                            heros.put("POSICIONY",hero.getPosicionY());
+                                                            heros.put("POSICIONX",hero.getPosiconX());
+                                                            heros.put("VIDA", hero.getVida());
 
-                                                        db.collection("Heroes").document(document.getId()).set(heros);
+                                                            db.collection("Heroes").document(document.getId()).set(heros);
+                                                        }
+                                                    } else {
+                                                        Log.d(TAG, "Error getting documents: ", task.getException());
                                                     }
-                                                } else {
-                                                    Log.d(TAG, "Error getting documents: ", task.getException());
                                                 }
-                                            }
-                                        });
+                                            });
 
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
                             }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-                    }
-                });
-    }
-
+                    });
+        }
+    */
     public void cargarPartida( ){
 
        /* try {
