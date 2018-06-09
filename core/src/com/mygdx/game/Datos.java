@@ -10,21 +10,26 @@ public class Datos implements Serializable {
     private ArrayList<Escuadron> escuadrones, borrar;
     private String id_usario;
     private String id_mapa;
+    private String id_mapaNuevo;
+    private String id_mapaViejo;
 
-    public Datos(String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones,String id_mapa) {
+
+    public Datos(String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones,String id_mapa,String id_mapaViejo) {
         this.id_usario=id_usario;
         this.heroe = heroe;
         this.escuadrones = escuadrones;
         vacio=false;
         borrar=new ArrayList<Escuadron>();
         this.id_mapa=id_mapa;
+        this.id_mapaViejo=id_mapaViejo;
     }
 
-    public Datos(String id_usario,int level)
+    public Datos(String id_usario,int level,String id_mapaViejo)
     {
         this.id_usario=id_usario;
         id_mapa=id_usario+"m"+level;
         vacio=true;
+        this.id_mapaViejo=id_mapaViejo;
     }
 
     public boolean esVacio(){return vacio;}
@@ -63,4 +68,26 @@ public class Datos implements Serializable {
     public String getId_mapa(){
         return id_mapa;
     }
+
+
+    public String getId_mapaNuevo() {
+        return id_mapaNuevo;
+    }
+
+    public void setId_mapaNuevo(String id_mapaNuevo) {
+        this.id_mapaNuevo = id_mapaNuevo;
+    }
+
+
+    public String getId_mapaViejo() {
+        return id_mapaViejo;
+    }
+
+    public void setId_mapaViejo(String id_mapaViejo) {
+        this.id_mapaViejo = id_mapaViejo;
+    }
+
+
+
+
 }

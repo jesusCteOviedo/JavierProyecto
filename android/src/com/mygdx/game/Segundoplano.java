@@ -463,6 +463,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
         mapa = new HashMap<>();
         mapa.put("ID_PARTIDA", user.getUid());
         mapa.put("NIVEL", idMapa);
+        mapa.put("ID_MAPA", idMapa);
 
         db.collection("Mapa")
                 .add(mapa)
@@ -519,7 +520,7 @@ public class Segundoplano extends AsyncTask <Void, Integer, Boolean>{
             escuadron_enemigo.put("ID_ESCUADRON", escu.get(i).getId());
             escuadron_enemigo.put("PosX", escu.get(i).getPosicionX());
             escuadron_enemigo.put("PosY", escu.get(i).getPosicionY());
-            escuadron_enemigo.put("ID_PARTIDA",user.getUid());
+            escuadron_enemigo.put("ID_MAPA",user.getUid());
 
 
             db.collection("Escuadron")

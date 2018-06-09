@@ -10,6 +10,8 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
+import bbdd.SegundoplanoCopia;
+
 
 public class AndroidLauncher extends AndroidApplication {
 
@@ -23,7 +25,9 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		String message = intent.getStringExtra(empezar.EXTRA_MESSAGE);
 
-		Segundoplano s=new Segundoplano();
+		/*Segundoplano s=new Segundoplano();
+		s.execute();*/
+		SegundoplanoCopia s=new SegundoplanoCopia();
 		s.execute();
 
 

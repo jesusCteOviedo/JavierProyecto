@@ -7,7 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class Hero extends Actor implements AccionesBatalla{
+import java.io.IOException;
+import java.io.Serializable;
+
+public class Hero extends Actor implements AccionesBatalla,Serializable {
 
 
     transient  String nombre;
@@ -105,6 +108,37 @@ public class Hero extends Actor implements AccionesBatalla{
 
     public void setPosicionY(int posicionY) {
         this.posicionY = posicionY;
+    }
+
+
+
+    private void writeObject(java.io.ObjectOutputStream stream)
+            throws IOException
+    {
+        //stream.defaultWriteObject();
+        stream.writeObject(nombre);
+        stream.writeObject(path);
+        stream.writeObject(vida);
+        stream.writeObject(defensa);
+        stream.writeObject(ataque);
+        stream.writeObject(posiconX);
+        stream.writeObject(posicionY);
+
+    }
+
+    private void readObject(java.io.ObjectInputStream stream)
+            throws IOException, ClassNotFoundException
+    {
+        //stream.defaultReadObject();
+        nombre=(String)stream.readObject();
+        path=(String)stream.readObject();
+        vida=(Integer) stream.readObject();
+        defensa=(Integer)stream.readObject();
+        ataque=(Integer)stream.readObject();
+        posiconX=(Integer)stream.readObject();
+        posicionY=(Integer)stream.readObject();
+
+
     }
 
 

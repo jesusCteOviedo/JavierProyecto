@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Escuadron extends Actor  {
+public class Escuadron extends Actor implements Serializable {
 
     private ArrayList<Enemigo> enemigos;
     private Texture textura;
@@ -121,4 +123,35 @@ public class Escuadron extends Actor  {
     public ArrayList<Enemigo> getEnemigos() {
         return enemigos;
     }
+
+
+    private void writeObject(java.io.ObjectOutputStream stream)
+            throws IOException
+    {
+        //stream.defaultWriteObject();
+        stream.writeObject(enemigos);
+        stream.writeObject(posicionX);
+        stream.writeObject(posicionY);
+        stream.writeObject(id);
+        stream.writeObject(fila);
+        stream.writeObject(columna);
+        stream.writeObject(id_escuadron);
+    }
+
+    private void readObject(java.io.ObjectInputStream stream)
+            throws IOException, ClassNotFoundException
+    {
+        //stream.defaultReadObject();
+        enemigos= (ArrayList<Enemigo>) stream.readObject();
+        posicionX=(Float) stream.readObject();
+        posicionY=(Float) stream.readObject();
+        id=(Integer)stream.readObject();
+        fila=(Integer)stream.readObject();
+        columna=(Integer)stream.readObject();
+        id_escuadron=(String)stream.readObject();
+
+    }
+
+
+
 }

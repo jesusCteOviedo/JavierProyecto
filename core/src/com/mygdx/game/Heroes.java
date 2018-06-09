@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import Test.AccionesBatalla;
 
-public class Heroes extends Actor implements AccionesBatalla {
+public class Heroes extends Actor implements AccionesBatalla,Serializable {
 
 
 
@@ -100,6 +101,37 @@ public class Heroes extends Actor implements AccionesBatalla {
     public void setPosicionY(int posicionY) {
         this.posicionY = posicionY;
     }
+
+
+
+    private void writeObject(java.io.ObjectOutputStream stream)
+            throws IOException
+    {
+        //stream.defaultWriteObject();
+
+        stream.writeObject(vida);
+        stream.writeObject(defensa);
+        stream.writeObject(ataque);
+        stream.writeObject(posiconX);
+        stream.writeObject(posicionY);
+
+    }
+
+    private void readObject(java.io.ObjectInputStream stream)
+            throws IOException, ClassNotFoundException
+    {
+        //stream.defaultReadObject();
+
+        vida=(Integer) stream.readObject();
+        defensa=(Integer)stream.readObject();
+        ataque=(Integer)stream.readObject();
+        posiconX=(Integer)stream.readObject();
+        posicionY=(Integer)stream.readObject();
+
+
+    }
+
+
 
 }
 

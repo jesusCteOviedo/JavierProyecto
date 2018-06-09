@@ -193,7 +193,7 @@ public class Mapa  implements InputProcessor,Screen {
             e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+2,2));
             escuadrones.add(e);
             Heroes heroe=new Heroes();
-            datos=new Datos(datos.getIdUsuario(),heroe,escuadrones,datos.getId_mapa());
+            datos=new Datos(datos.getIdUsuario(),heroe,escuadrones,datos.getId_mapa(),datos.getId_mapaViejo());
         }
     }
 
@@ -220,7 +220,9 @@ public class Mapa  implements InputProcessor,Screen {
         colisonar();
         if(comprobarMuertos()){
             level++;
-            game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level),level));
+            String viejo=datos.getId_mapa();
+           // game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level),level));
+            game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level,viejo),level));
         }
     }
 
