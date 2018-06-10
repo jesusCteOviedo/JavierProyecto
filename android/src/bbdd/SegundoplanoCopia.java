@@ -311,6 +311,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
             escuadron_enemigo.put("COLUMNA", d.getEscruadrones().get(i).getColumna());
             escuadron_enemigo.put("ID_MAPA",d.getId_mapa());
             escuadron_enemigo.put("ID",d.getEscruadrones().get(i).getId());
+            escuadron_enemigo.put("PATH",d.getEscruadrones().get(i).getPath());
 
 
             db.collection("Escuadron")
