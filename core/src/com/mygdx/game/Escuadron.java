@@ -24,6 +24,9 @@ public class Escuadron extends Actor implements Serializable {
 
     private String id_escuadron;
 
+
+    private String path;
+
     private Texture texture;
 
     private TextureRegion[][] tmp;
@@ -39,6 +42,7 @@ public class Escuadron extends Actor implements Serializable {
         this.fila=fila;
         this.columna=columna;
         this.id_escuadron=id_escuadron;
+        this.path=rutaTextura;
        // textura=new Texture(Gdx.files.internal(rutaTextura));
         textura=new Texture(Gdx.files.internal(rutaTextura));
 
@@ -68,6 +72,10 @@ public class Escuadron extends Actor implements Serializable {
         }
     }
 
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getFila() {
         return fila;
@@ -125,6 +133,15 @@ public class Escuadron extends Actor implements Serializable {
     }
 
 
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     private void writeObject(java.io.ObjectOutputStream stream)
             throws IOException
     {
@@ -136,6 +153,7 @@ public class Escuadron extends Actor implements Serializable {
         stream.writeObject(fila);
         stream.writeObject(columna);
         stream.writeObject(id_escuadron);
+        stream.writeObject(path);
     }
 
     private void readObject(java.io.ObjectInputStream stream)
@@ -149,9 +167,23 @@ public class Escuadron extends Actor implements Serializable {
         fila=(Integer)stream.readObject();
         columna=(Integer)stream.readObject();
         id_escuadron=(String)stream.readObject();
+        path=(String)stream.readObject();
 
     }
 
 
+
+
+    @Override
+    public String toString() {
+        return  posicionX +
+                "," + posicionY +
+                "," + fila +
+                "," + columna +
+                "," + id +
+                "," + id_escuadron +
+                "," + path
+                ;
+    }
 
 }

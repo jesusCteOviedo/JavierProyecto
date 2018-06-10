@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import Test.Cliente;
 import Test.ContenedorMapas;
 
 
@@ -87,6 +88,11 @@ public class MenuInicio implements Screen {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //System.out.println("Pressed Text Button ataque");
+                Cliente client =new Cliente();
+               // Datos d=client.cargar(id_usuario);
+               // client.c();
+               Datos d= client.prueba1(id_usuario);
+                game.setScreen(new Mapa(game,d,d.getLevel()));
                 return true;
             }
         });

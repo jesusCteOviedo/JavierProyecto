@@ -29,7 +29,11 @@ public class Enemigo implements AccionesBatalla,Serializable {
 
     transient  String nombre;
     transient String path;
-    transient int vida,ataque,defensa,fila,columna;
+    transient int vida;
+    transient int ataque;
+    transient int defensa;
+    transient int fila;
+    transient int columna;
     private String id;
     private Texture textura;
 
@@ -125,6 +129,23 @@ public class Enemigo implements AccionesBatalla,Serializable {
     }
 
 
+    public int getFila() {
+        return fila;
+    }
+
+    public void setFila(int fila) {
+        this.fila = fila;
+    }
+
+    public int getColumna() {
+        return columna;
+    }
+
+    public void setColumna(int columna) {
+        this.columna = columna;
+    }
+
+
     public int getIdGradico() {
         return idGradico;
     }
@@ -145,6 +166,7 @@ public class Enemigo implements AccionesBatalla,Serializable {
         stream.writeObject(fila);
         stream.writeObject(columna);
         stream.writeObject(id);
+        stream.writeObject(idGradico);
     }
 
     private void readObject(java.io.ObjectInputStream stream)
@@ -159,9 +181,12 @@ public class Enemigo implements AccionesBatalla,Serializable {
         fila=(Integer)stream.readObject();
         columna=(Integer)stream.readObject();
         id=(String)stream.readObject();
+        idGradico=(Integer)stream.readObject();
 
     }
 
-
-
+    @Override
+    public String toString() {
+        return  nombre  + "," + path  + "," + vida + "," + ataque + "," + defensa + "," + fila + "," + columna + "," + id  + "," + idGradico;
+    }
 }

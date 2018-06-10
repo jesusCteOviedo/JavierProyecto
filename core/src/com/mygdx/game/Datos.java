@@ -14,10 +14,15 @@ public class Datos implements Serializable {
     private String id_mapaViejo;
 
 
-    public Datos(String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones,String id_mapa,String id_mapaViejo) {
+
+    private int level;
+
+
+    public Datos(String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones,String id_mapa,String id_mapaViejo,int level) {
         this.id_usario=id_usario;
         this.heroe = heroe;
         this.escuadrones = escuadrones;
+        this.level=level;
         vacio=false;
         borrar=new ArrayList<Escuadron>();
         this.id_mapa=id_mapa;
@@ -87,7 +92,13 @@ public class Datos implements Serializable {
         this.id_mapaViejo = id_mapaViejo;
     }
 
+    public int getLevel() {
+        return level;
+    }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
 
 }

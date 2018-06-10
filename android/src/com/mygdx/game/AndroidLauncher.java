@@ -10,6 +10,7 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
+import bbdd.CargarPartida;
 import bbdd.SegundoplanoCopia;
 
 
@@ -27,7 +28,10 @@ public class AndroidLauncher extends AndroidApplication {
 
 		/*Segundoplano s=new Segundoplano();
 		s.execute();*/
-		SegundoplanoCopia s=new SegundoplanoCopia();
+		CargarPartida c=new CargarPartida();
+		c.cargarPartida(this);
+
+		SegundoplanoCopia s=new SegundoplanoCopia(this);
 		s.execute();
 
 

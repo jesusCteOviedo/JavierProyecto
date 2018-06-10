@@ -17,6 +17,7 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
 
     private int posiconX,posicionY;
 
+
     private int vida,defensa,ataque;
     private Texture texture;
 
@@ -132,6 +133,10 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
     }
 
 
+    @Override
+    public String toString() {
+        return posiconX + ","+ posicionY + "," + vida + "," + defensa + "," + ataque;
+    }
 
 }
 
