@@ -31,7 +31,11 @@ public class Enemigo implements AccionesBatalla,Serializable {
     private TextureRegion[][] tmp;
     private TextureRegion[] walkFrames;
 
-    public Enemigo(String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,String id,int idGrafico){
+
+
+    private int jefe;
+
+    public Enemigo(String nombre, int vida, int ataque, int defensa, String path,int fila,int columna,String id,int idGrafico,int jefe){
         this.nombre=nombre;
         this.path=path;
         this.vida=vida;
@@ -41,7 +45,7 @@ public class Enemigo implements AccionesBatalla,Serializable {
         this.columna=columna;
         this.id=id;
         this.idGradico=idGrafico;
-
+        this.jefe=jefe;
         textura=new Texture(Gdx.files.internal(path));
 
         tmp = TextureRegion.split(textura,
@@ -139,6 +143,14 @@ public class Enemigo implements AccionesBatalla,Serializable {
         this.idGradico = idGradico;
     }
 
+    public int getJefe() {
+        return jefe;
+    }
+
+    public void setJefe(int jefe) {
+        this.jefe = jefe;
+    }
+
     private void writeObject(java.io.ObjectOutputStream stream)
             throws IOException
     {
@@ -152,6 +164,7 @@ public class Enemigo implements AccionesBatalla,Serializable {
         stream.writeObject(columna);
         stream.writeObject(id);
         stream.writeObject(idGradico);
+        stream.writeObject(jefe);
     }
 
     private void readObject(java.io.ObjectInputStream stream)
@@ -167,11 +180,12 @@ public class Enemigo implements AccionesBatalla,Serializable {
         columna=(Integer)stream.readObject();
         id=(String)stream.readObject();
         idGradico=(Integer)stream.readObject();
+        jefe=(Integer)stream.readObject();
 
     }
 
     @Override
     public String toString() {
-        return  nombre  + "," + path  + "," + vida + "," + ataque + "," + defensa + "," + fila + "," + columna + "," + id  + "," + idGradico;
+        return  nombre  + "," + path  + "," + vida + "," + ataque + "," + defensa + "," + fila + "," + columna + "," + id  + "," + idGradico+"," + jefe;
     }
 }

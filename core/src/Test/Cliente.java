@@ -185,14 +185,14 @@ public class Cliente implements AsyncTask {
                     ", idGradico=" + idGradico +
                     '}';
             */
-            while((linea2=br.readLine())!=null) {
+           /* while((linea2=br.readLine())!=null) {
                 parts2= linea2.split("\\,");
                 //System.out.println(parts2[1]);
                enemi.add(new Enemigo(parts2[0],Integer.parseInt(parts2[2]),Integer.parseInt(parts2[3]),Integer.parseInt(parts2[4])
                         ,parts2[1],Integer.parseInt(parts2[5]),Integer.parseInt(parts2[6]),parts2[7],Integer.parseInt(parts2[8])));
 
 
-            }
+            }*/
 
             br.close();
             fr.close();

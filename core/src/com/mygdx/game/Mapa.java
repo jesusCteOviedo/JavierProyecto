@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import Test.BatallaCopia;
 import Test.Cliente;
@@ -182,17 +183,46 @@ public class Mapa  implements InputProcessor,Screen {
 
     private void inicializar(){
         if (datos.esVacio()) {
+            Random r = new Random();
+            Random jefe = new Random();
+
             ArrayList<Escuadron> escuadrones=new ArrayList<Escuadron>();
-            Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+1,1);
-            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+3,3));
-            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+2,2));
-            e.addEnemigo(new Enemigo("enemigoC", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+1,1));
+            Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+1,r.nextInt(6)+1);
+            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+3,r.nextInt(6)+1,0));
+            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+2,r.nextInt(6)+1,0));
+            e.addEnemigo(new Enemigo("enemigoC", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+1,r.nextInt(6)+1,0));
+
             escuadrones.add(e);
-            e = new Escuadron(250, 400, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+2,2);
-            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,e.getId_escuadron()+"-"+1,1));
-            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+2,2));
+            e = new Escuadron(250, 400, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+2,r.nextInt(6)+1);
+            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,e.getId_escuadron()+"-"+1,r.nextInt(6)+1,0));
+            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+2,r.nextInt(6)+1,0));
             escuadrones.add(e);
-            Heroes heroe=new Heroes("caballero",100,50,50,"knight.png",100,100,20);
+
+            e = new Escuadron(500, 600, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+3,r.nextInt(6)+1);
+            e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,e.getId_escuadron()+"-"+1,r.nextInt(6)+1,0));
+            e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+2,r.nextInt(6)+1,0));
+            escuadrones.add(e);
+
+
+            Heroes heroe=new Heroes("caballero",100,50,50,"knight.png",100,100,0);
+
+            int opcionN=r.nextInt(escuadrones.size());
+           /*for(int i=0;i<escuadrones.get(opcionN).getEnemigos().size();i++){
+
+            }*/
+            int valor=r.nextInt(escuadrones.get(opcionN).getEnemigos().size());
+            escuadrones.get(opcionN).getEnemigo(valor).setJefe(-1);
+            System.out.println(escuadrones.get(opcionN).getEnemigo(valor).getId()+"***********"+escuadrones.get(opcionN).getEnemigo(valor).getJefe());
+
+
+            int opcionS=opcionN;
+            while(opcionS==opcionN){
+                opcionS=r.nextInt(escuadrones.size());
+            }
+            valor=r.nextInt(escuadrones.get(opcionS).getEnemigos().size());
+            escuadrones.get(opcionS).getEnemigo(valor).setJefe(1);
+            System.out.println(escuadrones.get(opcionS).getEnemigo(valor).getId()+"/////////////////"+escuadrones.get(opcionS).getEnemigo(valor).getJefe());
+
             datos=new Datos(datos.getIdUsuario(),heroe,escuadrones,datos.getId_mapa(),datos.getId_mapaViejo(),level);
         }
     }
@@ -220,8 +250,11 @@ public class Mapa  implements InputProcessor,Screen {
         colisonar();
         if(comprobarMuertos()){
             level++;
+            if(level>=4){
+                level=0;
+            }
             String viejo=datos.getId_mapa();
-           // game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level),level));
+            // game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level),level));
             game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level,viejo),level));
         }
     }

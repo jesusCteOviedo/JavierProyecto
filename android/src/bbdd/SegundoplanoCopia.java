@@ -860,7 +860,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                     });
 
 
-
+/*
             db.collection("Mapa")
                     .whereEqualTo("ID_PARTIDA", user.getUid())
                     .get()
@@ -911,7 +911,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                                                                                     // e.close();
                                                                                 } catch (IOException e1) {
                                                                                     e1.printStackTrace();
-                                                                                }*/
+                                                                                }
                                                                             }
                                                                             try {
                                                                                 for (int i=0;i<enemigo_juego.size();i++){
@@ -943,7 +943,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                                         e.close();
                                     } catch (IOException e1) {
                                         e1.printStackTrace();
-                                    }*/
+                                    }
                                 }
 
 
@@ -952,7 +952,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                         }
 
                     });
-
+*/
 
 
             /*db.collection("Heroes")

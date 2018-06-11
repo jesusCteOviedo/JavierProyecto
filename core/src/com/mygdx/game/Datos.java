@@ -12,7 +12,7 @@ public class Datos implements Serializable {
     private String id_mapa;
     private String id_mapaNuevo;
     private String id_mapaViejo;
-
+    private ArrayList<String>mapas_viejos;
 
 
     private int level;

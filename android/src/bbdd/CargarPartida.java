@@ -40,7 +40,7 @@ public class CargarPartida extends Activity{
 
 
 
-
+/*
     public void cargarPartida(Activity acti ){
         try {
 
@@ -254,6 +254,6 @@ public class CargarPartida extends Activity{
 
     }
 
-
+*/
 
 }

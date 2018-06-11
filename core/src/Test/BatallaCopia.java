@@ -47,11 +47,14 @@ public class BatallaCopia  implements  Screen {
     private String mapa;
 
     private int id;
+    private int num;
+    private boolean tienePoder;
 
-    public BatallaCopia(Game agame,Datos datos,int num,int idmap) {
+    public BatallaCopia(Game agame, final Datos dato, int num, int idmap) {
         this.game = agame;
         this.mapa=mapa;
         this.id=idmap;
+        this.num=num;
         stage = new Stage();
         bacth = new SpriteBatch();
         bit = new BitmapFont();
@@ -59,7 +62,7 @@ public class BatallaCopia  implements  Screen {
         int row_height = Gdx.graphics.getWidth() / 9;
         int col_width = Gdx.graphics.getWidth() / 8;
 
-        this.datos=datos;
+        this.datos=dato;
         myActor=datos.getHeroe();
 
         myEnemi=new Enemigos(datos.getEscruadrones().get(num).getEnemigos());
@@ -84,6 +87,11 @@ public class BatallaCopia  implements  Screen {
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
 
+
+
+
+
+
         Button button2 = new TextButton("Ataque", mySkin, "default");
         button2.setSize(col_width, row_height);
         button2.setPosition(Gdx.graphics.getWidth() / 2 - col_width * 2, col_width / 2);
@@ -92,6 +100,7 @@ public class BatallaCopia  implements  Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 sistemaBatallaConAtaque();
+
             }
 
             @Override
@@ -111,14 +120,10 @@ public class BatallaCopia  implements  Screen {
         button3.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Press a defensa");
-                /*Cliente s=new Cliente();
-                s.enviarServidor();*/
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Pressed Text Button defensa");
                 sistemaBatallaConDefensa();
                 return true;
             }
@@ -159,6 +164,8 @@ public class BatallaCopia  implements  Screen {
         music.setLooping(true);
         music.setVolume(100f);
 
+        System.out.println("HEROPODER "+datos.getHeroe().getPoder());
+
 
     }
 
@@ -173,20 +180,30 @@ public class BatallaCopia  implements  Screen {
             valorDado = r.nextInt(4);
         }
 
-        myEnemi.getEnemigo(valorDado).recibirDaño(myActor.getAtaque());
-
+        if(myEnemi.getEnemigo(valorDado).getJefe()<=0) {
+            myEnemi.getEnemigo(valorDado).recibirDaño(myActor.getAtaque());
+        }else{
+            if(myActor.getPoder()==1){
+                myEnemi.getEnemigo(valorDado).recibirDaño(myActor.getAtaque());
+            }
+        }
 
         if(myEnemi.getEnemigo(valorDado).estavivo()){
-
-            myActor.recibirDaño(myEnemi.getEnemigo(valorDado).getAtaque());
+            for(int i=0;i<myEnemi.size();i++) {
+                myActor.recibirDaño(myEnemi.getEnemigo(i).getAtaque());
+            }
             barraHero.setValue(myActor.getVida());
         }else{
-
+            if(myEnemi.getEnemigo(valorDado).getJefe()==-1) {
+                datos.getHeroe().setPoder(1);
+            }
             myEnemi.redimensionarVector(valorDado);
         }
 
 
     }
+
+
 
     private void sistemaBatallaConDefensa(){
         for(int i=0;i<myEnemi.size();i++){
@@ -223,7 +240,7 @@ public class BatallaCopia  implements  Screen {
             this.game.setScreen(new Mapa(game,datos,id));
         }
         if(myActor.getVida()<0){
-                this.game.setScreen(new GameOver(game,datos.getIdUsuario()));
+            this.game.setScreen(new GameOver(game,datos.getIdUsuario()));
         }
 
     }

@@ -28,8 +28,8 @@ public class AndroidLauncher extends AndroidApplication {
 
 		/*Segundoplano s=new Segundoplano();
 		s.execute();*/
-		CargarPartida c=new CargarPartida();
-		c.cargarPartida(this);
+		/*CargarPartida c=new CargarPartida();
+		c.cargarPartida(this);*/
 
 		SegundoplanoCopia s=new SegundoplanoCopia(this);
 		s.execute();
