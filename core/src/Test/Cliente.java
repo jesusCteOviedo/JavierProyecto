@@ -226,11 +226,9 @@ public class Cliente implements AsyncTask {
               //  System.out.println(linea);
 
             }
-            b.setPosiconX(Integer.parseInt(parts[0]));
-            b.setPosicionY(Integer.parseInt(parts[1]));
-            b.setVida(Integer.parseInt(parts[2]));
-            b.setDefensa(Integer.parseInt(parts[3]));
-            b.setAtaque(Integer.parseInt(parts[4]));
+            //String nombre, int vida, int ataque, int defensa, String path,int posiconX,int posicionY,int poder
+            b=new Heroes(parts[5],Integer.parseInt(parts[2]),Integer.parseInt(parts[4]),Integer.parseInt(parts[3])
+                    ,parts[6],Integer.parseInt(parts[0]),Integer.parseInt(parts[1]),Integer.parseInt(parts[7]));
 
             br.close();
             fr.close();

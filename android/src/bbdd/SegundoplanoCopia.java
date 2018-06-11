@@ -388,8 +388,8 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                                 DocumentReference her = db.collection("Heroes").document(document.getId());
                                 her.update("ATAQUE", d.getHeroe().getAtaque());
                                 her.update("DEFENSA", d.getHeroe().getDefensa());
-                                her.update("POSICIONY", d.getHeroe().getY());
-                                her.update("POSICIONX", d.getHeroe().getX());
+                                her.update("POSICIONY", d.getHeroe().getPosicionY());
+                                her.update("POSICIONX", d.getHeroe().getPosiconX());
                                 her.update("VIDA", d.getHeroe().getVida());
                             }
                         } else {

@@ -109,13 +109,17 @@ public class CargarPartida extends Activity{
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     // Log.d(TAG, document.getId() + " => " + document.getData());
 
+                                    //String nombre, int vida, int ataque, int defensa, String path,int posiconX,int posicionY,int poder
+                                    hero = new Heroes(document.getData().get("NOMBRE").toString()
+                                            ,Integer.parseInt(document.getData().get("VIDA").toString())
+                                            ,Integer.parseInt(document.getData().get("ATAQUE").toString())
+                                            ,Integer.parseInt(document.getData().get("DEFENSA").toString())
+                                            ,document.getData().get("PATH").toString()
+                                            ,Integer.parseInt(document.getData().get("POSICIONX").toString())
+                                            ,Integer.parseInt(document.getData().get("POSICIONY").toString())
+                                            ,Integer.parseInt(document.getData().get("PODER").toString())
+                                            );
 
-                                    hero = new Heroes();
-                                    hero.setVida(Integer.parseInt(document.getData().get("VIDA").toString()));
-                                    hero.setAtaque(Integer.parseInt(document.getData().get("ATAQUE").toString()));
-                                    hero.setDefensa(Integer.parseInt(document.getData().get("DEFENSA").toString()));
-                                    hero.setPosiconX(Integer.parseInt(document.getData().get("POSICIONX").toString()));
-                                    hero.setPosicionY(Integer.parseInt(document.getData().get("POSICIONY").toString()));
                                     try {
                                         h.write(String.valueOf(hero.toString()+'\n'));
                                         h.close();
