@@ -192,7 +192,7 @@ public class Mapa  implements InputProcessor,Screen {
             e.addEnemigo(new Enemigo("enemigoA", 10, 20, 30, "sprites/characters/Demon01.png",9,9,e.getId_escuadron()+"-"+1,1));
             e.addEnemigo(new Enemigo("enemigoB", 10, 20, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+2,2));
             escuadrones.add(e);
-            Heroes heroe=new Heroes();
+            Heroes heroe=new Heroes("caballero",100,50,50,"knight.png",100,100,20);
             datos=new Datos(datos.getIdUsuario(),heroe,escuadrones,datos.getId_mapa(),datos.getId_mapaViejo(),level);
         }
     }

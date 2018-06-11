@@ -16,10 +16,15 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
 
 
     private int posiconX,posicionY;
+    private String nombre;
 
 
-    private int vida,defensa,ataque;
+
+    private String path;
+
+    private int vida,defensa,ataque,poder;
     private Texture texture;
+
 
 
     public Heroes(){
@@ -29,6 +34,20 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
         defensa=50;
         ataque=50;
         texture = new Texture(Gdx.files.internal("knight.png"));
+    }
+//String nombre, int vida, int ataque, int defensa, String path,int posiconX,int posicionY,knight.png
+
+
+    public Heroes(String nombre, int vida, int ataque, int defensa, String path,int posiconX,int posicionY,int poder){
+        this.posiconX=posiconX;
+        this.posicionY=posicionY;
+        this.vida=vida;
+        this.defensa=ataque;
+        this.ataque=defensa;
+        this.poder=poder;
+        this.nombre=nombre;
+        this.path=path;
+        texture = new Texture(Gdx.files.internal(path));
     }
 
     @Override
@@ -103,7 +122,29 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
         this.posicionY = posicionY;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getPoder() {
+        return poder;
+    }
+
+    public void setPoder(int poder) {
+        this.poder = poder;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     private void writeObject(java.io.ObjectOutputStream stream)
             throws IOException
@@ -115,6 +156,9 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
         stream.writeObject(ataque);
         stream.writeObject(posiconX);
         stream.writeObject(posicionY);
+        stream.writeObject(nombre);
+        stream.writeObject(path);
+        stream.writeObject(poder);
 
     }
 
@@ -128,14 +172,16 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
         ataque=(Integer)stream.readObject();
         posiconX=(Integer)stream.readObject();
         posicionY=(Integer)stream.readObject();
-
+        nombre=(String)stream.readObject();
+        path=(String)stream.readObject();
+        poder=(Integer) stream.readObject();
 
     }
 
 
     @Override
     public String toString() {
-        return posiconX + ","+ posicionY + "," + vida + "," + defensa + "," + ataque;
+        return posiconX + ","+ posicionY + "," + vida + "," + defensa + "," + ataque+ "," + nombre+ "," + path+ "," + poder;
     }
 
 }

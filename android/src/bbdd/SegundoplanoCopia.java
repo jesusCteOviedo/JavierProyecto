@@ -534,12 +534,14 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
         heros = new HashMap<>();
         heros.put("ID_PARTIDA", user.getUid());
         heros.put("ID_PERSONAJE", 1);
-        heros.put("NOMBRE","Caballero");
+        heros.put("NOMBRE",d.getHeroe().getNombre());
         heros.put("ATAQUE", d.getHeroe().getAtaque());
         heros.put("DEFENSA", d.getHeroe().getDefensa());
         heros.put("POSICIONY",d.getHeroe().getPosicionY());
         heros.put("POSICIONX",d.getHeroe().getPosiconX());
         heros.put("VIDA", d.getHeroe().getVida());
+        heros.put("PATH", d.getHeroe().getPath());
+        heros.put("PODER", d.getHeroe().getPoder());
 
 
         db.collection("Heroes")
