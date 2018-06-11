@@ -2,9 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
 import java.io.*;
@@ -15,17 +13,6 @@ import java.io.*;
 import Test.AccionesBatalla;
 
 public class Enemigo implements AccionesBatalla,Serializable {
-
-
-
-
-
-
-    /*
-    private String nombre;
-    private String path;
-    private int vida,ataque,defensa,id,fila,columna;*/
-
 
     transient  String nombre;
     transient String path;
@@ -90,9 +77,7 @@ public class Enemigo implements AccionesBatalla,Serializable {
     }
 
 
-   /* public Texture getTextura (){
-        return textura;
-    }*/
+
 
     public TextureRegion getTextura(int id) {
         return walkFrames[id];

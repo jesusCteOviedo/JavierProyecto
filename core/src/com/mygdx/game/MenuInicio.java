@@ -1,17 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-/*import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-*/
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -22,14 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
 
 import Test.Cliente;
-import Test.ContenedorMapas;
+
 
 
 public class MenuInicio implements Screen {
@@ -43,14 +29,12 @@ public class MenuInicio implements Screen {
     private Game game;
     private Music music;
     private String id_usuario;
-    private ContenedorMapas maps;
+
 
 
     public MenuInicio(Game agame,String id){
         this.game=agame;
         this.id_usuario=id;
-      //  this.maps=new ContenedorMapas();
-       // maps.rellenar();
         int row_height = Gdx.graphics.getWidth() / 9;
         int col_width = Gdx.graphics.getWidth() / 4;
 
@@ -70,9 +54,9 @@ public class MenuInicio implements Screen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 music.stop();
-                //game.setScreen(new Mapa(game,new Datos(),"maps/town.tmx"));
-                          game.setScreen(new Mapa(game,new Datos(id_usuario,0,null),0));
-                //         game.setScreen(new Mapa(game,new Datos(),maps.getPath("maps/level1.tmx"),1));
+
+                game.setScreen(new Mapa(game,new Datos(id_usuario,0,null),0));
+
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -87,11 +71,10 @@ public class MenuInicio implements Screen {
         cargar.addListener(new InputListener(){
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //System.out.println("Pressed Text Button ataque");
+
                 Cliente client =new Cliente();
-               // Datos d=client.cargar(id_usuario);
-               // client.c();
-               Datos d= client.prueba1(id_usuario);
+
+                Datos d= client.prueba1(id_usuario);
                 game.setScreen(new Mapa(game,d,d.getLevel()));
                 return true;
             }
@@ -103,7 +86,7 @@ public class MenuInicio implements Screen {
         salir.addListener(new InputListener(){
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //System.out.println("Pressed Text Button ataque");
+
                 Gdx.app.exit();
 
                 return true;

@@ -8,11 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import java.io.IOException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import Test.AccionesBatalla;
+
 
 
 public class Enemigos extends Actor implements Serializable  {
@@ -22,7 +22,7 @@ public class Enemigos extends Actor implements Serializable  {
 
     private ArrayList<Enemigo> enemigos;
     private ArrayList<ProgressBar>barraEnemigo;
-    Skin mySkin;
+    private Skin mySkin;
     private ArrayList<Label>nombreEnemigo;
     public Enemigos(ArrayList <Enemigo> e){
 
@@ -42,10 +42,10 @@ public class Enemigos extends Actor implements Serializable  {
 
             float aux = (i + 1);
             float a = aux / (enemigos.size() + 1);
-            //float a = aux / (persona.length + 1);
+
             float width = a * Gdx.graphics.getWidth();
             if(enemigos.get(i)!=null) {
-             //   batch.draw(enemigos.get(i).textura, width, Gdx.graphics.getWidth() / 2 - 150, 50, 50);
+
                 batch.draw(enemigos.get(i).getTextura(enemigos.get(i).getIdGradico()), width, Gdx.graphics.getWidth() / 2 - 150, 50, 50);
                 barraEnemigo.add(new ProgressBar(0, enemigos.get(i).getVida(), 1, false, mySkin));
                 barraEnemigo.get(i).setValue(enemigos.get(i).getVida());
@@ -76,35 +76,8 @@ public class Enemigos extends Actor implements Serializable  {
     }
 
 
-    public void limpiar(){
-        barraEnemigo.clear();
-    }
-
     public int size(){return enemigos.size();}
 
-/*
-    private void writeObject(java.io.ObjectOutputStream stream)
-            throws IOException
-    {
-        stream.defaultWriteObject();
-        stream.writeObject(posiconX);
-        stream.writeObject(posicionY);
-        stream.writeObject(vida);
-        stream.writeObject(defensa);
-        stream.writeObject(ataque);
-    }
-
-    private void readObject(java.io.ObjectInputStream stream)
-            throws IOException, ClassNotFoundException
-    {
-        stream.defaultReadObject();
-        posiconX=(int)stream.readObject();
-        posicionY=(int)stream.readObject();
-        vida=(int)stream.readObject();
-        defensa=(int)stream.readObject();
-        ataque=(int)stream.readObject();
-    }
-*/
 
 }
 

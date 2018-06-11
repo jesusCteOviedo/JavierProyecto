@@ -27,7 +27,7 @@ public class Escuadron extends Actor implements Serializable {
 
     private String path;
 
-    private Texture texture;
+
 
     private TextureRegion[][] tmp;
     private TextureRegion[] walkFrames;
@@ -64,8 +64,8 @@ public class Escuadron extends Actor implements Serializable {
 
     public void draw(Batch batch, float alpha){
 
-            if(estanVivos()){ //     batch.draw(escuadrones.get(i).getTextura(), width, Gdx.graphics.getWidth() / 2 - 150, 50, 50);
-                //batch.draw(getTextura(), getPosicionX(), getPosicionY(), 50, 50);
+            if(estanVivos()){
+
                 batch.draw( getTextura(id), getPosicionX(), getPosicionY(), 50, 50);
 
 
@@ -107,9 +107,7 @@ public class Escuadron extends Actor implements Serializable {
         return true;
     }
 
-    /*public Texture getTextura() {
-        return textura;
-    }*/
+
 
     public TextureRegion getTextura(int id) {
         return walkFrames[id];

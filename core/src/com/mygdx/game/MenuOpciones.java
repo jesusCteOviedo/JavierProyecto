@@ -11,10 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import java.util.ArrayList;
-
-import BasesDeDatos.EscuadronBBDD;
-import BasesDeDatos.HeroBBDD;
 import Test.Cliente;
 
 
@@ -27,14 +23,14 @@ public class MenuOpciones implements Screen {
     private Button volver;
     private Button salir;
     private Game game;
-    private String mapa;
+
     private Datos d;
     private int level;
 
 
     public MenuOpciones(Game agame, Datos datos,int leve){
         this.game=agame;
-       // this.mapa=map;
+
         this.d=datos;
         this.level=leve;
         int row_height = Gdx.graphics.getWidth() / 9;
@@ -56,9 +52,6 @@ public class MenuOpciones implements Screen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 Cliente client=new Cliente();
-                HeroBBDD h=new HeroBBDD(d.getHeroe());
-
-                //client.guardar(h,d.getBorrar(),level,d.getEscruadrones());
                 client.guardar(d,level);
 
             }
@@ -75,7 +68,7 @@ public class MenuOpciones implements Screen {
         volver.addListener(new InputListener(){
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //System.out.println("Pressed Text Button ataque");
+
                 game.setScreen(new Mapa(game, d,level));
                 return true;
             }
@@ -87,7 +80,7 @@ public class MenuOpciones implements Screen {
         salir.addListener(new InputListener(){
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //System.out.println("Pressed Text Button ataque");
+
                 //vuelve a inicra la apicaion
                 System.exit(0);
                 //
