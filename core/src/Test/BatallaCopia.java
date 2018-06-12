@@ -197,6 +197,7 @@ public class BatallaCopia  implements  Screen {
             if(myEnemi.getEnemigo(valorDado).getJefe()==-1) {
                 datos.getHeroe().setPoder(1);
             }
+            datos.setPuntuacionJugador(datos.getPuntuacionJugador()+1);
             myEnemi.redimensionarVector(valorDado);
         }
 
@@ -206,6 +207,7 @@ public class BatallaCopia  implements  Screen {
 
 
     private void sistemaBatallaConDefensa(){
+        myActor.regenerar();
         for(int i=0;i<myEnemi.size();i++){
             myActor.reducirDaño(myEnemi.getEnemigo(i).getAtaque());
             barraHero.setValue(myActor.getVida());
@@ -237,9 +239,9 @@ public class BatallaCopia  implements  Screen {
         }else{
             music.stop();
             datos.eliminarEscuadron(this.num_escuadron);
-            this.game.setScreen(new Mapa(game,datos,id));
+            this.game.setScreen(new Mapa(game,datos));
         }
-        if(myActor.getVida()<0){
+        if(myActor.getVida()<=0){
             this.game.setScreen(new GameOver(game,datos.getIdUsuario()));
         }
 

@@ -15,10 +15,27 @@ public class Datos implements Serializable {
     private ArrayList<String>mapas_viejos;
 
 
+
+    private int puntuacionJugador;
+
+
     private int level;
 
+    //creamos los datos de un nuevo juego
+    public Datos(String id_usuario){
+        this.id_usario=id_usuario;
+        this.heroe=new Heroes("caballero",100,50,50,"knight.png",100,100,0);
+        this.escuadrones=new ArrayList<Escuadron>();
+        this.level=0;
+        borrar=new ArrayList<Escuadron>();
+        id_mapa=id_usario+"m"+level;
+        id_mapaNuevo=null;
+        id_mapaViejo=null;
+        puntuacionJugador=0;
+        vacio=true;
+    }
 
-    public Datos(String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones,String id_mapa,String id_mapaViejo,int level) {
+    public Datos(String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones,String id_mapa,String id_mapaViejo,int level,int puntuacionJugador) {
         this.id_usario=id_usario;
         this.heroe = heroe;
         this.escuadrones = escuadrones;
@@ -27,14 +44,16 @@ public class Datos implements Serializable {
         borrar=new ArrayList<Escuadron>();
         this.id_mapa=id_mapa;
         this.id_mapaViejo=id_mapaViejo;
+        this.puntuacionJugador=puntuacionJugador;
     }
 
-    public Datos(String id_usario,int level,String id_mapaViejo)
+    public Datos(String id_usario,int level,String id_mapaViejo,int puntuacionjugador)
     {
         this.id_usario=id_usario;
         id_mapa=id_usario+"m"+level;
         vacio=true;
         this.id_mapaViejo=id_mapaViejo;
+        this.puntuacionJugador=puntuacionjugador;
     }
 
     public boolean esVacio(){return vacio;}
@@ -98,6 +117,21 @@ public class Datos implements Serializable {
 
     public void setLevel(int level) {
         this.level = level;
+        id_mapa=id_usario+"m"+level;
+    }
+
+    public int getPuntuacionJugador() {
+        return puntuacionJugador;
+    }
+
+    public void setPuntuacionJugador(int puntuacionJugador) {
+        this.puntuacionJugador = puntuacionJugador;
+    }
+
+    public void vaciar() {vacio=true;
+    }
+
+    public void llenar() {vacio=false;
     }
 
 

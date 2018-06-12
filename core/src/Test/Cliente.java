@@ -258,7 +258,7 @@ public class Cliente implements AsyncTask {
             fr.close();
 
 //String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones,String id_mapa,String id_mapaViejo,int level
-            d=new Datos(id_usuario,b,escuadron,id_mapa,null,level);
+            d=new Datos(id_usuario,b,escuadron,id_mapa,null,level,0);
             return d;
         }
         catch(Exception e){

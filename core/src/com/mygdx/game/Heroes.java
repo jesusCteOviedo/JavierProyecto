@@ -24,7 +24,7 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
 
     private int vida,defensa,ataque,poder;
     private Texture texture;
-
+    private int vida_max;
 
 
     public Heroes(){
@@ -47,6 +47,7 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
         this.poder=poder;
         this.nombre=nombre;
         this.path=path;
+        this.vida_max=vida;
         texture = new Texture(Gdx.files.internal(path));
     }
 
@@ -75,10 +76,24 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
 
     @Override
     public void reducirDaño(int ataque) {
-        int def=this.defensa*2;
-        def=def-ataque;
-        ataque=ataque-def/10;
-        vida=vida-ataque ;
+        int resultado=ataque-this.defensa*2;
+        if (resultado<0) resultado=0;
+        vida=vida-resultado ;
+        if (vida<0) vida=0;
+    }
+
+    public void regenerar(){
+        this.vida=vida+(int)(vida*0.10);
+        if (vida>vida_max)
+            vida=vida_max;
+    }
+
+    public void subirNivel(){
+        vida_max=vida_max+(int)(vida_max*0.10);
+        vida=vida_max;
+        ataque=ataque+(int)(ataque*0.10);
+        defensa=defensa+(int)(defensa*0.10);
+
 
     }
 

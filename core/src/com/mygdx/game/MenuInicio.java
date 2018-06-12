@@ -55,7 +55,8 @@ public class MenuInicio implements Screen {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 music.stop();
 
-                game.setScreen(new Mapa(game,new Datos(id_usuario,0,null),0));
+            //    game.setScreen(new Mapa(game,new Datos(id_usuario,0,null,0),0));
+                game.setScreen(new Mapa(game,new Datos(id_usuario)));
 
             }
             @Override
@@ -75,7 +76,7 @@ public class MenuInicio implements Screen {
                 Cliente client =new Cliente();
 
                 Datos d= client.prueba1(id_usuario);
-                game.setScreen(new Mapa(game,d,d.getLevel()));
+                game.setScreen(new Mapa(game,d));
                 return true;
             }
         });

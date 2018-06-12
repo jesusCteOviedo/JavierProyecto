@@ -57,6 +57,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
     private Map<String, Object> escuadron_enemigo;
     private Map<String, Object> enemigo;
     private Map<String, Object> mapa;
+    private Map<String, Object> puntuacion;
     private ArrayList<EscuadronBBDD> escuadron,escu;
     private ArrayList<Enemigo> enemigo_juego;
     private ArrayList<Escuadron> escuadron_cargar;
@@ -373,6 +374,48 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
         }
 
 
+
+        db.collection("Tabla_Puntuacion")
+                .whereEqualTo("ID_PARTIDA", user.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                DocumentReference punt = db.collection("Tabla_Puntuacion").document(document.getId());
+                                punt.update("puntuacion", d.getPuntuacionJugador());
+
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        db.collection("Heroes")
+                .whereEqualTo("ID_PARTIDA", user.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                DocumentReference her = db.collection("Heroes").document(document.getId());
+                                her.update("ATAQUE", d.getHeroe().getAtaque());
+                                her.update("DEFENSA", d.getHeroe().getDefensa());
+                                her.update("POSICIONY", d.getHeroe().getPosicionY());
+                                her.update("POSICIONX", d.getHeroe().getPosiconX());
+                                her.update("VIDA", d.getHeroe().getVida());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
     }
 
     public void Actualiza_Hero_Escuadron(){
@@ -398,6 +441,27 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                         }
                     }
                 });
+
+
+        db.collection("Tabla_Puntuacion")
+                .whereEqualTo("ID_PARTIDA", user.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                DocumentReference punt = db.collection("Tabla_Puntuacion").document(document.getId());
+                                punt.update("puntuacion", d.getPuntuacionJugador());
+
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
 
         if(d.getBorrar().size()>0) {
 
@@ -596,6 +660,32 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                         }
                     });
         }
+
+        puntuacion=new HashMap<>();
+        puntuacion.put("ID_PARTIDA",user.getUid());
+        puntuacion.put("puntuacion",d.getPuntuacionJugador());
+
+        db.collection("Tabla_Puntuacion")
+                .add(puntuacion)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+
+
 
     }
 

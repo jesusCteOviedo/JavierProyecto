@@ -69,7 +69,7 @@ public class MenuOpciones implements Screen {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 
-                game.setScreen(new Mapa(game, d,level));
+                game.setScreen(new Mapa(game, d));
                 return true;
             }
         });
