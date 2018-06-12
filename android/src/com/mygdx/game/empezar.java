@@ -15,8 +15,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,21 +24,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.database.DatabaseReference;;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import com.google.firebase.firestore.QuerySnapshot;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 import static com.firebase.ui.auth.ui.phone.SubmitConfirmationCodeFragment.TAG;
 
 public class empezar  extends FragmentActivity {
@@ -115,19 +111,16 @@ public class empezar  extends FragmentActivity {
                                         }
                                     });*/
 
-                            // startActivity(new Intent(empezar.this,AndroidLauncher.class));
 
-                            //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            //Toast.makeText(GoogleSignInActivity.this, "Authentication failed.",
-                            //	Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+
+
                             System.exit(0);
                         }
 
-                        // ...
+
                     }
                 });
     }
@@ -147,8 +140,8 @@ public class empezar  extends FragmentActivity {
                 firebaseAuthWithGoogle(account);
             } else {
                 System.exit(0);
-                // Google Sign In failed, update UI appropriately
-                // ...
+                // Google Sign In failed
+
             }
         }
     }

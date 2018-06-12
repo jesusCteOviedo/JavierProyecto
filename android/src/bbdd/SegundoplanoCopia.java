@@ -347,6 +347,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                 enemigo.put("FILA", this.d.getEscruadrones().get(i).getEnemigo(j).getFila());
                 enemigo.put("COLUMNA", this.d.getEscruadrones().get(i).getEnemigo(j).getColumna());
                 enemigo.put("ID_GRAFICO", this.d.getEscruadrones().get(i).getEnemigo(j).getIdGradico());
+                enemigo.put("JEFE",this.d.getEscruadrones().get(i).getEnemigo(j).getJefe());
                 enemigo.put("ID_ESCUADRON", this.d.getEscruadrones().get(i).getId_escuadron());
 
 
@@ -614,6 +615,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                 enemigo.put("ID_GRAFICO",this.d.getEscruadrones().get(i).getEnemigo(j).getIdGradico());
                 enemigo.put("FILA",this.d.getEscruadrones().get(i).getEnemigo(j).getFila());
                 enemigo.put("COLUMNA",this.d.getEscruadrones().get(i).getEnemigo(j).getColumna());
+                enemigo.put("JEFE",this.d.getEscruadrones().get(i).getEnemigo(j).getJefe());
                 enemigo.put("ID_ESCUADRON", this.d.getEscruadrones().get(i).getId_escuadron());
 
 

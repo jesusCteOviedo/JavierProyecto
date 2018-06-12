@@ -40,7 +40,7 @@ public class CargarPartida extends Activity{
 
 
 
-/*
+
     public void cargarPartida(Activity acti ){
         try {
 
@@ -211,7 +211,8 @@ public class CargarPartida extends Activity{
                                                                                     Enemigo ene=new Enemigo(document.getData().get("Nombre_E").toString(),Integer.parseInt(document.getData().get("Vida_E").toString())
                                                                                             ,Integer.parseInt(document.getData().get("Ataque_E").toString()),Integer.parseInt(document.getData().get("Defensa_E").toString()),document.getData().get("Path").toString()
                                                                                             ,Integer.parseInt(document.getData().get("FILA").toString()),Integer.parseInt(document.getData().get("COLUMNA").toString()),document.getData().get("ID_ENEMIGO").toString()
-                                                                                            ,Integer.parseInt( document.getData().get("ID_GRAFICO").toString()));
+                                                                                            ,Integer.parseInt( document.getData().get("ID_GRAFICO").toString())
+                                                                                            , Integer.parseInt( document.getData().get("JEFE").toString()));
                                                                                     enemigo_juego.add(ene);
                                                                                 }
 
@@ -254,6 +255,6 @@ public class CargarPartida extends Activity{
 
     }
 
-*/
+
 
 }
