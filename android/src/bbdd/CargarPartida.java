@@ -33,7 +33,7 @@ public class CargarPartida extends Activity{
     private ArrayList<Escuadron> escuadron_cargar;
     private Escuadron escuadon;
     private Heroes hero;
-    private OutputStreamWriter h,m,es,e;
+    private OutputStreamWriter h,m,es,e,puntua;
     private int resultado;
 
 
@@ -247,6 +247,34 @@ public class CargarPartida extends Activity{
                         }
 
                     });
+
+            puntua= new OutputStreamWriter(
+                    acti.openFileOutput("Puntuacion.txt", Context.MODE_PRIVATE));
+            db.collection("Partida_Actual")
+                    .whereEqualTo("ID_PARTIDA", user.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @SuppressLint("LongLogTag")
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    //Log.d(TAG, document.getId() + " => " + document.getData());
+                                    try {
+                                        puntua.write(document.getData().get("PUNTUACION").toString());
+
+                                        puntua.close();
+
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
 
         } catch (Exception e) {
             e.printStackTrace();

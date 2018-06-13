@@ -186,10 +186,12 @@ public class Mapa  implements InputProcessor,Screen {
     private void inicializar(){
         if (datos.esVacio()) {
             Random r = new Random();
-            Random jefe = new Random();
+            Random numero_escuadrones = new Random();
+            Random numero_enemigos=new Random();
+            Random situar = new Random();
 
             ArrayList<Escuadron> escuadrones=new ArrayList<Escuadron>();
-            Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+1,r.nextInt(6)+1);
+            /*Escuadron e = new Escuadron(100, 300, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+1,r.nextInt(6)+1);
             e.addEnemigo(new Enemigo("enemigoA", 10, 40, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+3,r.nextInt(6)+1,0));
             e.addEnemigo(new Enemigo("enemigoB", 10, 40, 30, "sprites/characters/Demon01.png",8,8,e.getId_escuadron()+"-"+2,r.nextInt(6)+1,0));
             e.addEnemigo(new Enemigo("enemigoC", 10, 40, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+1,r.nextInt(6)+1,0));
@@ -203,7 +205,25 @@ public class Mapa  implements InputProcessor,Screen {
             e = new Escuadron(500, 600, "sprites/characters/Demon01.png",8,8,datos.getId_mapa()+"-"+3,r.nextInt(6)+1);
             e.addEnemigo(new Enemigo("enemigoA", 10, 40, 30, "sprites/characters/Demon01.png",9,9,e.getId_escuadron()+"-"+1,r.nextInt(6)+1,0));
             e.addEnemigo(new Enemigo("enemigoB", 10, 40, 30, "sprites/characters/Demon01.png",8,9,e.getId_escuadron()+"-"+2,r.nextInt(6)+1,0));
-            escuadrones.add(e);
+            escuadrones.add(e);*/
+
+            //vMin + r.nextInt(vMax - vMin + 1);
+            int rango=2+numero_escuadrones.nextInt(5-1+1);
+            System.out.println(rango+"escuadrones--------");
+            int rango_enemigo=1+numero_enemigos.nextInt(5-1+1);
+            System.out.println(rango_enemigo+"enemigos--------");
+
+            int posicionx=100;
+            int posiciony=300;
+            for(int i=0;i<rango;i++) {
+                posicionx+=100;
+                posiciony+=100;
+                Escuadron e = new Escuadron(posicionx, posiciony, "sprites/characters/Demon01.png", 8, 8, datos.getId_mapa() + "-" + i, r.nextInt(6) + 1);
+                for (int j = 0; j < rango_enemigo; j++) {
+                    e.addEnemigo(new Enemigo("enemigoA", 10, 40, 30, "sprites/characters/Demon01.png", 8, 8, e.getId_escuadron() + "-" + j, r.nextInt(6) + 1, 0));
+                }
+                escuadrones.add(e);
+            }
 
 
            // Heroes heroe=new Heroes("caballero",100,50,50,"knight.png",100,100,0);

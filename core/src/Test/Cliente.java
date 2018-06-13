@@ -257,8 +257,25 @@ public class Cliente implements AsyncTask {
             br.close();
             fr.close();
 
+
+
+            archivo = new File ("/data/data/com.mygdx.game/files/Puntuacion.txt");
+            fr = new FileReader (archivo);
+            br = new BufferedReader(fr);
+            String linea5;
+            int puntuacion=0;
+            while((linea5=br.readLine())!=null) {
+                puntuacion=Integer.parseInt(linea5);
+
+            }
+
+            br.close();
+            fr.close();
+
+
+
 //String id_usario,Heroes heroe, ArrayList<Escuadron> escuadrones,String id_mapa,String id_mapaViejo,int level
-            d=new Datos(id_usuario,b,escuadron,id_mapa,null,level,0);
+            d=new Datos(id_usuario,b,escuadron,id_mapa,null,level,puntuacion);
             return d;
         }
         catch(Exception e){
