@@ -223,6 +223,8 @@ public class Mapa  implements InputProcessor,Screen {
                     e.addEnemigo(new Enemigo("enemigoA", 10, 40, 30, "sprites/characters/Demon01.png", 8, 8, e.getId_escuadron() + "-" + j, r.nextInt(6) + 1, 0));
                 }
                 escuadrones.add(e);
+                rango_enemigo=1+numero_enemigos.nextInt(5-1+1);
+                System.out.println(rango_enemigo+"enemigos--------");
             }
 
 
