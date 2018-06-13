@@ -208,27 +208,28 @@ public class Mapa  implements InputProcessor,Screen {
             escuadrones.add(e);*/
 
             //vMin + r.nextInt(vMax - vMin + 1);
-            int rango=2+numero_escuadrones.nextInt(5-1+1);
+            int rango=2+numero_escuadrones.nextInt(3);
             System.out.println(rango+"escuadrones--------");
-            int rango_enemigo=1+numero_enemigos.nextInt(5-1+1);
-            System.out.println(rango_enemigo+"enemigos--------");
 
-            int posicionx=100;
-            int posiciony=300;
+            int ancho=Gdx.graphics.getWidth()/rango;
+            System.out.println(ancho+" ///*/*/*//*/**/*/*/*/*");
+            int x;
             for(int i=0;i<rango;i++) {
-                posicionx+=100;
-                posiciony+=100;
-                Escuadron e = new Escuadron(posicionx, posiciony, "sprites/characters/Demon01.png", 8, 8, datos.getId_mapa() + "-" + i, r.nextInt(6) + 1);
+                int y=situar.nextInt(Gdx.graphics.getHeight()-50)+200;
+                x=ancho*i+situar.nextInt(ancho-64)+32;
+                Escuadron e = new Escuadron(x, y, "sprites/characters/Demon01.png", 8, 8, datos.getId_mapa() + "-" + i, r.nextInt(6) + 1);
+                int rango_enemigo=1+numero_enemigos.nextInt(5);
+                System.out.println(rango_enemigo+"enemigos--------");
+
                 for (int j = 0; j < rango_enemigo; j++) {
                     e.addEnemigo(new Enemigo("enemigoA", 10, 40, 30, "sprites/characters/Demon01.png", 8, 8, e.getId_escuadron() + "-" + j, r.nextInt(6) + 1, 0));
                 }
                 escuadrones.add(e);
-                rango_enemigo=1+numero_enemigos.nextInt(5-1+1);
                 System.out.println(rango_enemigo+"enemigos--------");
             }
 
 
-           // Heroes heroe=new Heroes("caballero",100,50,50,"knight.png",100,100,0);
+            // Heroes heroe=new Heroes("caballero",100,50,50,"knight.png",100,100,0);
 
             int opcionN=r.nextInt(escuadrones.size());
            /*for(int i=0;i<escuadrones.get(opcionN).getEnemigos().size();i++){
@@ -248,7 +249,7 @@ public class Mapa  implements InputProcessor,Screen {
             System.out.println(escuadrones.get(opcionS).getEnemigo(valor).getId()+"/////////////////"+escuadrones.get(opcionS).getEnemigo(valor).getJefe());
             datos.setEscruadrones(escuadrones);
             datos.llenar();
-         //   datos=new Datos(datos.getIdUsuario(),heroe,escuadrones,datos.getId_mapa(),datos.getId_mapaViejo(),level,datos.getPuntuacionJugador());
+            //   datos=new Datos(datos.getIdUsuario(),heroe,escuadrones,datos.getId_mapa(),datos.getId_mapaViejo(),level,datos.getPuntuacionJugador());
         }
     }
 
@@ -286,7 +287,7 @@ public class Mapa  implements InputProcessor,Screen {
             datos.setLevel(level);
             datos.vaciar();
             game.setScreen(new Mapa(game,datos));
-        //    game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level,viejo,datos.getPuntuacionJugador())));
+            //    game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level,viejo,datos.getPuntuacionJugador())));
         }
     }
 

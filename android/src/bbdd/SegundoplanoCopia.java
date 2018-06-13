@@ -127,8 +127,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
                     case 2:
                         d=(Datos)entrada.readObject();
 
-                        int id=entrada.readInt();
-                        idMapa=id;
+
                         entrada.close();
                         entradaDatos.close();
                         socket.close();
@@ -216,7 +215,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
 
         mapa = new HashMap<>();
         mapa.put("ID_PARTIDA", user.getUid());
-        mapa.put("NIVEL", idMapa);
+        mapa.put("NIVEL", d.getLevel());
         mapa.put("ID_MAPA", d.getId_mapa());
 
         db.collection("Mapa")
@@ -645,7 +644,7 @@ public class SegundoplanoCopia extends AsyncTask <Void, Integer, Boolean>{
 
         mapa = new HashMap<>();
         mapa.put("ID_PARTIDA", user.getUid());
-        mapa.put("NIVEL", idMapa);
+        mapa.put("NIVEL", d.getLevel());
         mapa.put("ID_MAPA", d.getId_mapa());
 
         db.collection("Mapa")

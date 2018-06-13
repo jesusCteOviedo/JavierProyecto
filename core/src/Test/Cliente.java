@@ -16,7 +16,11 @@ import java.util.ArrayList;
 
 public class Cliente implements AsyncTask {
 
-    public void guardar( Datos d, int id){
+    /**
+     *Le cominica a la clase encarga de guardar los datos en la base de datos
+     * @param d
+     * */
+    public void guardar( Datos d){
         try {
 
             Socket socket=new Socket("localhost",2500);
@@ -24,7 +28,6 @@ public class Cliente implements AsyncTask {
             ObjectOutputStream flujo_salida = new ObjectOutputStream( salida);
             flujo_salida.writeInt(2);
             flujo_salida.writeObject(d);
-            flujo_salida.writeInt(id);//nivel
             flujo_salida.flush();
             flujo_salida.close();
 
