@@ -22,7 +22,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 import java.util.ArrayList;
@@ -59,6 +62,8 @@ public class Mapa  implements InputProcessor,Screen {
 
     private ArrayList<String> path;
     private String idUsuario;
+
+
 
     public Mapa(Game agame, Datos d){
         inicializarPaths();
@@ -117,7 +122,7 @@ public class Mapa  implements InputProcessor,Screen {
         //boton guardar
         Button button2 = new TextButton("Menu", mySkin, "default");
         button2.setSize(col_width, row_height);
-        button2.setPosition(Gdx.graphics.getHeight()/2, Gdx.graphics.getWidth()/2);
+        button2.setPosition(Gdx.graphics.getWidth()-col_width, 0);
         button2.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -214,18 +219,26 @@ public class Mapa  implements InputProcessor,Screen {
             int ancho=Gdx.graphics.getWidth()/rango;
             System.out.println(ancho+" ///*/*/*//*/**/*/*/*/*");
             int x;
+            char nombre='A';
             for(int i=0;i<rango;i++) {
-                int y=situar.nextInt(Gdx.graphics.getHeight()-50)+200;
-                x=ancho*i+situar.nextInt(ancho-64)+32;
+
+                int y=situar.nextInt(3*Gdx.graphics.getHeight()/5)+Gdx.graphics.getHeight()/5;
+                x=ancho*i+situar.nextInt(ancho-80)+50;
+                System.out.println(x+" xxxxxxxxx "+y+" yyyyyyyyyyy");
                 Escuadron e = new Escuadron(x, y, "sprites/characters/Demon01.png", 8, 8, datos.getId_mapa() + "-" + i, r.nextInt(6) + 1);
                 int rango_enemigo=1+numero_enemigos.nextInt(5);
                 System.out.println(rango_enemigo+"enemigos--------");
 
                 for (int j = 0; j < rango_enemigo; j++) {
-                    e.addEnemigo(new Enemigo("enemigoA", 10, 40, 30, "sprites/characters/Demon01.png", 8, 8, e.getId_escuadron() + "-" + j, r.nextInt(6) + 1, 0));
+                    e.addEnemigo(new Enemigo("enemigo"+nombre, 30, 10, 30, "sprites/characters/Demon01.png", 8, 8, e.getId_escuadron() + "-" + j, r.nextInt(6) + 1, 0));
+                nombre++;
                 }
                 escuadrones.add(e);
                 System.out.println(rango_enemigo+"enemigos--------");
+                String aux=String.valueOf(nombre);
+                if(aux.equals("Z")){
+                    nombre='A';
+                }
             }
 
 
@@ -286,6 +299,7 @@ public class Mapa  implements InputProcessor,Screen {
             datos.setId_mapaViejo(datos.getId_mapa());
             datos.setLevel(level);
             datos.vaciar();
+            datos.getHeroe().setPoder(0);
             game.setScreen(new Mapa(game,datos));
             //    game.setScreen(new Mapa(game,new Datos(datos.getIdUsuario(),level,viejo,datos.getPuntuacionJugador())));
         }

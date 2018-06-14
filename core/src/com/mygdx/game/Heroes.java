@@ -54,7 +54,7 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
     @Override
     public void draw(Batch batch, float alpha){
 
-        batch.draw(texture, getX(), getY(), 32, 32);
+        batch.draw(texture, getX(), getY(), 50, 50);
 
     }
 
