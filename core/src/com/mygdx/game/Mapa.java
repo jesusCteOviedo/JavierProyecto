@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -62,7 +63,7 @@ public class Mapa  implements InputProcessor,Screen {
 
     private ArrayList<String> path;
     private String idUsuario;
-
+    Label puntos;
 
 
     public Mapa(Game agame, Datos d){
@@ -82,6 +83,7 @@ public class Mapa  implements InputProcessor,Screen {
 
         inicializar();
         //  maps.rellenar();
+
 
         //establecemos el mapa del juego que es secuecial en funcion del nivel
         int aux_mapa=level%path.size();
@@ -103,7 +105,7 @@ public class Mapa  implements InputProcessor,Screen {
 
         //turno para el heroe
         //   hero= new Heroes();
-        datos.getHeroe().setPosition(100, 100);
+        datos.getHeroe().setPosition(900, 50);
         stage.addActor(datos.getHeroe());
 
         //inicializmos los enemigos y los situamos en el mada
@@ -117,6 +119,11 @@ public class Mapa  implements InputProcessor,Screen {
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         int row_height = Gdx.graphics.getWidth() / 9;
         int col_width = Gdx.graphics.getWidth() / 8;
+
+
+        puntos= new Label("Puntos total "+d.getPuntuacionJugador(),mySkin,"big");
+        puntos.setPosition(100,55);
+        stage.addActor(puntos);
 
 
         //boton guardar
@@ -259,6 +266,7 @@ public class Mapa  implements InputProcessor,Screen {
             }
             valor=r.nextInt(escuadrones.get(opcionS).getEnemigos().size());
             escuadrones.get(opcionS).getEnemigo(valor).setJefe(1);
+            escuadrones.get(opcionS).setId(9);//Esto borrar porque solo presentacion
             System.out.println(escuadrones.get(opcionS).getEnemigo(valor).getId()+"/////////////////"+escuadrones.get(opcionS).getEnemigo(valor).getJefe());
             datos.setEscruadrones(escuadrones);
             datos.llenar();

@@ -50,6 +50,14 @@ public class BatallaCopia  implements  Screen {
     private int num;
     private boolean tienePoder;
 
+    private Label texto;
+    private String mensaje;
+
+
+
+    private int contador;
+
+
     public BatallaCopia(Game agame, final Datos dato, int num, int idmap) {
         this.game = agame;
         this.mapa=mapa;
@@ -58,7 +66,7 @@ public class BatallaCopia  implements  Screen {
         stage = new Stage();
         bacth = new SpriteBatch();
         bit = new BitmapFont();
-
+        mensaje="";
         int row_height = Gdx.graphics.getWidth() / 9;
         int col_width = Gdx.graphics.getWidth() / 8;
 
@@ -131,6 +139,11 @@ public class BatallaCopia  implements  Screen {
 
         stage.addActor(button3);
 
+        texto= new Label(mensaje,mySkin,"big");
+        //texto.setFontScale(2.5f,2.5f);
+        texto.setPosition(0,450);
+        stage.addActor(texto);
+
 
        /* Button button4 = new TextButton("Volver", mySkin, "default");
         button4.setSize(col_width, row_height);
@@ -164,7 +177,7 @@ public class BatallaCopia  implements  Screen {
         music.play();
         music.setLooping(true);
         music.setVolume(100f);
-        System.out.println("HEROPODER "+datos.getHeroe().getPoder());
+
 
 
 
@@ -172,8 +185,8 @@ public class BatallaCopia  implements  Screen {
 
 
     private void sistemaBatallaConAtaque() {
-        int row_height = Gdx.graphics.getWidth() / 9;
-        int col_width = Gdx.graphics.getWidth() / 8;
+        mensaje="";
+     //   texto= new Label(mensaje,mySkin,"big");
         System.out.println("Hero ataco");
         Random r = new Random();
         int valorDado = r.nextInt(4);
@@ -182,24 +195,38 @@ public class BatallaCopia  implements  Screen {
         }
 
         if(myEnemi.getEnemigo(valorDado).getJefe()<=0) {
-            myEnemi.getEnemigo(valorDado).recibirDaño(myActor.getAtaque());
+            mensaje+=myEnemi.getEnemigo(valorDado).recibirDaño(myActor.getAtaque())+"\n";
         }else{
             if(myActor.getPoder()==1){
-                myEnemi.getEnemigo(valorDado).recibirDaño(myActor.getAtaque());
+                mensaje+=myEnemi.getEnemigo(valorDado).recibirDaño(myActor.getAtaque())+"\n";
             }
         }
 
-        if(myEnemi.getEnemigo(valorDado).estavivo()){
+       /* if(myEnemi.getEnemigo(valorDado).estavivo()){
             for(int i=0;i<myEnemi.size();i++) {
                 myActor.recibirDaño(myEnemi.getEnemigo(i).getAtaque());
             }
-            barraHero.setValue(myActor.getVida());
+            //barraHero.setValue(myActor.getVida());
         }else{
             if(myEnemi.getEnemigo(valorDado).getJefe()==-1) {
                 datos.getHeroe().setPoder(1);
             }
             datos.setPuntuacionJugador(datos.getPuntuacionJugador()+1);
             myEnemi.redimensionarVector(valorDado);
+        }*/
+
+        if(!myEnemi.getEnemigo(valorDado).estavivo()){
+            if(myEnemi.getEnemigo(valorDado).getJefe()==-1) {
+                datos.getHeroe().setPoder(1);
+            }
+            datos.setPuntuacionJugador(datos.getPuntuacionJugador()+1);
+            myEnemi.redimensionarVector(valorDado);
+        }
+
+        for(int i=0;i<myEnemi.size();i++) {
+            mensaje+=myActor.recibirDaño(myEnemi.getEnemigo(i).getAtaque())+"\n";
+            System.out.println(datos.getHeroe().getVida()+"VIDAAAAAAA");
+            barraHero.setValue(myActor.getVida());
         }
 
 
@@ -235,16 +262,21 @@ public class BatallaCopia  implements  Screen {
         if(comprobarMuertos()) {
             Gdx.gl.glClearColor(1, 1, 1, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            texto.setText(mensaje);
             stage.act();
             stage.draw();
+
+           // mensaje="";
         }else{
             music.stop();
             datos.eliminarEscuadron(this.num_escuadron);
+            datos.getHeroe().setVida(datos.getHeroe().getVida_max());
             this.game.setScreen(new Mapa(game,datos));
         }
         if(myActor.getVida()<=0){
             this.game.setScreen(new GameOver(game,datos.getIdUsuario()));
         }
+
 
     }
 

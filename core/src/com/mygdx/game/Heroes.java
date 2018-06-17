@@ -24,6 +24,9 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
 
     private int vida,defensa,ataque,poder;
     private Texture texture;
+
+
+
     private int vida_max;
 
 
@@ -59,10 +62,10 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
     }
 
     @Override
-    public void recibirDaño(int ataque) {
+    public String recibirDaño(int ataque) {
         int diferencia=defensa-ataque;
         vida=vida-diferencia;
-
+    return "daño "+diferencia;
     }
 
     @Override
@@ -75,11 +78,12 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
     }
 
     @Override
-    public void reducirDaño(int ataque) {
+    public String reducirDaño(int ataque) {
         int resultado=ataque-this.defensa*2;
         if (resultado<0) resultado=0;
         vida=vida-resultado ;
         if (vida<0) vida=0;
+        return "vida "+vida;
     }
 
     public void regenerar(){
@@ -160,6 +164,15 @@ public class Heroes extends Actor implements AccionesBatalla,Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+
+    public int getVida_max() {
+        return vida_max;
+    }
+
+    public void setVida_max(int vida_max) {
+        this.vida_max = vida_max;
     }
 
     private void writeObject(java.io.ObjectOutputStream stream)

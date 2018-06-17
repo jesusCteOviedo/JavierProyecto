@@ -66,11 +66,12 @@ public class Enemigo implements AccionesBatalla,Serializable {
 
 
 
-    public void recibirDaño(int ataque) {
+    public String recibirDaño(int ataque) {
         int diferencia=defensa-ataque;
         vida=vida-ataque;
-
+        return "daño ocasionado a "+this.nombre+ " "+diferencia;
     }
+
     public boolean estavivo() {
         if(vida<=0){
             return false;
@@ -111,10 +112,11 @@ public class Enemigo implements AccionesBatalla,Serializable {
         return defensa;
     }
 
-    public void reducirDaño(int ataque) {
+    public String reducirDaño(int ataque) {
         int def=this.defensa*2;
         def=def-ataque;
         vida-=def ;
+        return "daño ocasionado a "+this.nombre+ " "+def;
     }
 
 

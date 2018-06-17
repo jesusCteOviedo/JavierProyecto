@@ -24,7 +24,7 @@ public class Datos implements Serializable {
     //creamos los datos de un nuevo juego
     public Datos(String id_usuario){
         this.id_usario=id_usuario;
-        this.heroe=new Heroes("caballero",100,50,50,"knight.png",100,100,0);
+        this.heroe=new Heroes("caballero",500,50,50,"knight.png",900,50,0);
         this.escuadrones=new ArrayList<Escuadron>();
         this.level=0;
         borrar=new ArrayList<Escuadron>();

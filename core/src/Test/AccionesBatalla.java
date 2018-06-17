@@ -2,8 +2,8 @@ package Test;
 
 public interface AccionesBatalla {
 
-    void recibirDaño(int ataque);
+    String recibirDaño(int ataque);
     boolean estavivo();
-    void reducirDaño(int ataque);
+    String  reducirDaño(int ataque);
 
 }
